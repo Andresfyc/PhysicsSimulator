@@ -1,5 +1,7 @@
 package simulator.model;
 
+import simulator.misc.Vector2D;
+
 import java.util.List;
 
 public class MovingTowardsFixedPoint implements ForceLaws {
@@ -13,10 +15,12 @@ public class MovingTowardsFixedPoint implements ForceLaws {
     @Override
     public void apply(List<Body> bs) {
 
-        for(int i=0; i<bs.size(); i++){
-            bs.get(i).setAceleracion(bs.get(i).getAceleracion().direction().scale(-g)); //a=-g*di
 
+        for (Body b: bs ) {
+
+            //b.addForce(c.minus(b.getPosition()).direction().scale(g*b.getMass()));
         }
+
     }
 
     @Override
@@ -24,3 +28,5 @@ public class MovingTowardsFixedPoint implements ForceLaws {
         return "Moving Towards Fixed Point";
     }
 }
+
+

@@ -1,8 +1,8 @@
 package simulator.model;
 
-import java.util.List;
-
 import simulator.misc.Vector2D;
+
+import java.util.List;
 
 public class NewtonUniversalGravitation implements ForceLaws {
 
@@ -16,32 +16,23 @@ public class NewtonUniversalGravitation implements ForceLaws {
 
     @Override
     public void apply(List<Body> bs) {
+        Vector2D F;
+        for (Body Bi:bs) {
+            F=new Vector2D();
+            for (Body Bj: bs){
+                if(Bi!=Bj){
+                    fij=0;
+                    if(Bi.getMass()==0.0){
+                        Bi.velocity=new Vector2D();
 
-
-        for (int x=0; x<bs.size();x++){
-                Vector2D force=new Vector2D(bs.get(x).getPosition());
-                for (int y=0; y<bs.size();y++){
-                    if (x!=y){
-                        force=force.plus(GravityForce(bs.get(x),bs.get(y)));
-                        if(bs.get(x).getMass()!=0){
-                            bs.get(x).setAceleracion(force.scale(1/bs.get(x).getMass()));
-                        }else{
-                            bs.get(x).setAceleracion(new Vector2D(bs.get(x).getAceleracion()));
-                            bs.get(x).setVelocity(new Vector2D(bs.get(x).getVelocity()));
-                        }
+                    }else{
+                        fij=(G*Bi.getMass()*Bj.getMass())/Math.pow(Bi.getPosition().distanceTo(Bj.getPosition()),2);
+                        F=F.plus(Bj.getPosition().minus(Bi.getPosition()).direction().scale(fij));
                     }
                 }
+            }
+            Bi.addForce(F);
         }
-
-
-    }
-
-    private Vector2D GravityForce(Body i, Body j){
-
-        fij=G*((i.getMass()*j.getMass())/Math.pow(j.getPosition().distanceTo(i.getPosition()),2));
-        Vector2D distance=j.getPosition().minus(i.getPosition()).direction();
-        Vector2D Force=distance.scale(fij);
-        return Force;
 
     }
 
