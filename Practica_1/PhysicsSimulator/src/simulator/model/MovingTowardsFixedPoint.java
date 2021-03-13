@@ -6,13 +6,12 @@ import java.util.List;
 
 public class MovingTowardsFixedPoint implements ForceLaws {
 
-    private double g=9.81;
+    private double _g;
     private Vector2D _c;
 
 
     public MovingTowardsFixedPoint(double g, Vector2D c) {
-        this.g = g;
-        //this._c = _c;
+        _g = g;
         _c =new Vector2D(c);
     }
 
@@ -20,14 +19,15 @@ public class MovingTowardsFixedPoint implements ForceLaws {
     public void apply(List<Body> bs) {
 
         for (Body b: bs ) {
-            b.addForce(_c.minus(b.getPosition()).direction().scale(g*b.getMass()));
+            b.addForce(_c.minus(b.getPosition()).direction().scale(_g*b.getMass()));
         }
 
     }
 
     @Override
     public String toString() {
-        return "Moving Towards Fixed Point";
+        return "MovingTowardsFixedPoint{" +"_g=" + _g +", _c=" + _c +'}';
+
     }
 }
 
