@@ -6,22 +6,22 @@ public class MassLossingBody extends Body{
 
     protected double lossFactor;
     protected double lossFrequency;
-    protected double c;
+    protected double accumulatedTime;
 
-    public MassLossingBody(String id, Vector2D velocity, Vector2D position, double masa, double lossFactor, double lossFrequency) {
-        super(id, velocity, position, masa);
+    public MassLossingBody(String id, Vector2D velocity, Vector2D position, double mass, double lossFactor, double lossFrequency) {
+        super(id, velocity, position, mass);
         this.lossFactor = lossFactor;
         this.lossFrequency = lossFrequency;
-        this.c = 0.0;
+        this.accumulatedTime = 0.0;
     }
 
     @Override
     void move(double t) {
         super.move(t);
-        c += t;
-        if (c >= lossFrequency ){
+        accumulatedTime += t;
+        if (accumulatedTime >= lossFrequency ){
             mass=mass*(1-lossFactor);
-            c = 0.0;
+            accumulatedTime  = 0.0;
         }
     }
 }

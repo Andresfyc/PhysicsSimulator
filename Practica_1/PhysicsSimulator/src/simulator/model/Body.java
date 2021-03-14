@@ -18,11 +18,11 @@ public class Body {
 
 
 
-    public Body(String id, Vector2D velocity, Vector2D position, double masa) {
+    public Body(String id, Vector2D velocity, Vector2D position, double mass) {
         this.id = id;
         this.velocity = velocity;
         this.position = position;
-        this.mass = masa;
+        this.mass = mass;
     }
 
 
@@ -61,11 +61,11 @@ public class Body {
     JSONObject state;
     {
         state = new JSONObject();
-        state.put("id", id);
-        state.put("m", mass);
-        state.put("p",position);
-        state.put("v", velocity);
-        state.put("f",force);
+        state.put("id", getId());
+        state.put("m", getMass());
+        state.put("p", getPosition().asJSONArray());
+        state.put("v", getVelocity());
+        state.put("f", getForce());
 
     }
 
