@@ -8,10 +8,17 @@ public class NewtonUniversalGravitation implements ForceLaws {
 
     private double fij;
 
-    static private final double G=6.67E-11;
+    protected double _G;
 
-    public NewtonUniversalGravitation(double fij) {
-        this.fij = fij;
+    public NewtonUniversalGravitation(double _G) {
+        this._G = _G;
+    }
+
+    private Vector2D force(Body a, Body b) {
+        Vector2D delta = b.getPosition().minus(a.getPosition());
+        double dist = delta.magnitude();
+        double magnitude = dist>0 ? (_G * a.getMass() * b.getMass()) / (dist * dist) : 0.0;
+        return delta.direction().scale(magnitude);
     }
 
     @Override
@@ -26,8 +33,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
                         Bi.velocity=new Vector2D();
 
                     }else{
-                        fij=(G*Bi.getMass()*Bj.getMass())/Math.pow(Bi.getPosition().distanceTo(Bj.getPosition()),2);
-                        F=F.plus(Bj.getPosition().minus(Bi.getPosition()).direction().scale(fij));
+                        F = force(Bi,Bj);
                     }
                 }
             }
@@ -40,6 +46,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
     public String toString() {
         return "NewtonUniversalGravitation{" +
                 "fij=" + fij +
+                ", _G=" + _G +
                 '}';
     }
 }

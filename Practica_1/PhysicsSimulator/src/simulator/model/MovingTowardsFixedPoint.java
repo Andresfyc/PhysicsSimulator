@@ -26,7 +26,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 
     @Override
     public String toString() {
-        return "MovingTowardsFixedPoint{" +"_g=" + _g +", _c=" + _c +'}';
+        return "Moving Towards " + _c + "with constant acceleration " + _g ;
 
     }
 }

@@ -12,7 +12,6 @@ public class Body {
     protected Vector2D velocity;
     protected Vector2D force;
     protected Vector2D position;
-    protected Vector2D aceleracion;
     protected double mass;
     protected double tiempo;
 
@@ -35,18 +34,14 @@ public class Body {
     }
 
     void move(double t){
-        if (mass == 0){
-            aceleracion = new Vector2D();
-        }else {
-            aceleracion = force.scale(1/mass);
-        }
 
-        Vector2D t1 = aceleracion.scale(t*t);
-        Vector2D v2 = t1.scale(0.5);
-        Vector2D v3 = velocity.scale(t);
-        position = position.plus(v3.plus(v2));
-        velocity = velocity.plus(force.scale(t));
+        Vector2D acceleration;
 
+        if (mass == 0) acceleration = new Vector2D();// si m es cero, entonces se pone â a(0,0).
+        else acceleration = force.scale(1/mass); // si no, â= f/m.
+
+        position.plus(velocity.scale(t).plus(acceleration.scale(0.5*t*t)));
+        velocity.plus(acceleration.scale(t));
     }
 
     @Override
@@ -54,7 +49,7 @@ public class Body {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Body body = (Body) o;
-        return Double.compare(body.mass, mass) == 0 && Double.compare(body.tiempo, tiempo) == 0 && Objects.equals(id, body.id) && Objects.equals(velocity, body.velocity) && Objects.equals(force, body.force) && Objects.equals(position, body.position) && Objects.equals(aceleracion, body.aceleracion) && Objects.equals(state, body.state);
+        return Double.compare(body.mass, mass) == 0 && Double.compare(body.tiempo, tiempo) == 0 && Objects.equals(id, body.id) && Objects.equals(velocity, body.velocity) && Objects.equals(force, body.force) && Objects.equals(position, body.position) &&  Objects.equals(state, body.state);
     }
 
 
