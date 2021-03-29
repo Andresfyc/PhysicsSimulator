@@ -59,10 +59,11 @@ public class Controller {
         if (expOutJO != null){
             expState = expOutJO.getJSONArray("states").getJSONObject(0);
             if (!cmp.equal(expState,currState));
-                //throw new NotEqualStatesException(expState,currState,0);
+               // throw new NotEqualStatesException(expState,currState,0);
         }
 
         // for para comparar el resto de pasos y lanzar excepcion
+
 
         p.println("]");
         p.println("}");
