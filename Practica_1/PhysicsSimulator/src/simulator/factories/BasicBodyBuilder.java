@@ -8,7 +8,6 @@ import simulator.model.Body;
 public class BasicBodyBuilder extends Builder<Body>{
 
     public BasicBodyBuilder() {
-
         _typeTag="basic";
         _desc="Default Body";
     }

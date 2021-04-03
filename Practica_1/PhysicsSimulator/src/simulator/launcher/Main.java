@@ -40,9 +40,9 @@ public class Main {
 	private static JSONObject _stateComparatorInfo = null;
 
 	// factories
-	private static Factory<Body> _bodyFactory;
-	private static Factory<ForceLaws> _forceLawsFactory;
-	private static Factory<StateComparator> _stateComparatorFactory;
+	private static Factory<Body> _bodyFactory=null;
+	private static Factory<ForceLaws> _forceLawsFactory=null;
+	private static Factory<StateComparator> _stateComparatorFactory=null;
 
 	private static void init() {
 		// TODO initialize the bodies factory
