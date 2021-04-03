@@ -12,11 +12,6 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
         _desc="Mass Equal State";
     }
 
-    @Override
-    public JSONObject createData() {
-        return null;
-    }
-
 
     @Override
     protected StateComparator createTheInstance(JSONObject data) {

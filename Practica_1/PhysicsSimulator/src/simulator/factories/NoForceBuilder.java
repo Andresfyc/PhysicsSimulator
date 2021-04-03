@@ -10,13 +10,9 @@ public class NoForceBuilder extends Builder<ForceLaws>{
     public NoForceBuilder() {
     _typeTag="nf";
     _desc="No Force";
-;
+
     }
 
-    @Override
-   public JSONObject createData() {
-        return null;
-    }
 
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {

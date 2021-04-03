@@ -11,12 +11,12 @@ public class MassLosingBodyBuilder extends Builder<Body>{
 
     public MassLosingBodyBuilder() {
         _typeTag="mlb";
-        _desc="Mass losing Body")
+        _desc="Mass losing Body";
 
     }
 
     @Override
-    protected MassLossingBody createTheInstance(JSONObject data) {
+    protected Body createTheInstance(JSONObject data) {
 
         String id=data.getString("id");
         JSONArray vector= data.getJSONArray("p");

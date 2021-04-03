@@ -10,7 +10,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
 
 
     public MovingTowardsFixedPointBuilder() {
-        _typeTag="mtcp";
+        _typeTag="mtfp";
         _desc="Moving Towards Fixed Point";
     }
 
