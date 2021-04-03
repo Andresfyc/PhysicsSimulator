@@ -31,7 +31,11 @@ public class BuilderBasedFactory<T> implements Factory<T>{
 
     @Override
     public List<JSONObject> getInfo() {
-        return _factoryElements;
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        for (int i=0; i<_builders.size(); i++){
+            list.add(_builders.get(i).getBuilderInfo());
+        }
+        return list;
     }
 
 
