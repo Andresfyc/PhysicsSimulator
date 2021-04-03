@@ -33,4 +33,12 @@ public class BuilderBasedFactory<T> implements Factory<T>{
     public List<JSONObject> getInfo() {
         return _factoryElements;
     }
+
+    private List<JSONObject> getJSONlist(){
+        List<JSONObject> _factElem =new ArrayList<JSONObject>();
+        for (Builder<T> b: _builders){
+            _factElem.add(b.getBuilderInfo());
+        }
+        return _factElem;
+    }
 }

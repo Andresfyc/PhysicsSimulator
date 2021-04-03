@@ -24,4 +24,17 @@ public class MassLossingBody extends Body{
             accumulatedTime  = 0.0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "MassLossingBody{" +
+                "id='" + id + '\'' +
+                ", velocity=" + velocity +
+                ", force=" + force +
+                ", position=" + position +
+                ", mass=" + mass +
+                ", lossFactor=" + lossFactor +
+                ", lossFrequency=" + lossFrequency +
+                '}';
+    }
 }
