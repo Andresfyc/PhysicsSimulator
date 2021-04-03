@@ -8,6 +8,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 
 
     public NoForceBuilder(String _typeTag, String _desc) {
+
         super("nf", "No Force");
     }
 

@@ -25,16 +25,4 @@ public class MassLossingBody extends Body{
         }
     }
 
-    @Override
-    public String toString() {
-        return "MassLossingBody{" +
-                "id='" + id + '\'' +
-                ", velocity=" + velocity +
-                ", force=" + force +
-                ", position=" + position +
-                ", mass=" + mass +
-                ", lossFactor=" + lossFactor +
-                ", lossFrequency=" + lossFrequency +
-                '}';
-    }
 }

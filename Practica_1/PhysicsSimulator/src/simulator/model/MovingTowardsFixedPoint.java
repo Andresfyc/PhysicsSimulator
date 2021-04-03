@@ -24,6 +24,22 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 
     }
 
+    public double get_g() {
+        return _g;
+    }
+
+    public Vector2D get_c() {
+        return _c;
+    }
+
+    public void set_g(double _g) {
+        this._g = _g;
+    }
+
+    public void set_c(Vector2D _c) {
+        this._c = _c;
+    }
+
     @Override
     public String toString() {
         return "Moving Towards " + _c + "with constant acceleration " + _g ;

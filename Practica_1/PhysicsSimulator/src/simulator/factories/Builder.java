@@ -1,14 +1,12 @@
 package simulator.factories;
-
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.json.JSONObject;
 
-abstract class Builder <T extends Object>{
+public abstract class Builder <T>{
 
     protected String _typeTag; // tipo de objeto a construir
     protected String _desc;   // descripcion del objeto
 
-    public Builder(java.lang.String _typeTag, java.lang.String _desc) {
+    public Builder() {
     }
 
     public T createInstance(JSONObject info){
