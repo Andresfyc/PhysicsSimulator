@@ -10,7 +10,8 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
 
 
     public MovingTowardsFixedPointBuilder() {
-        super("mtcp", "Moving Towards Fixed Point");
+        _typeTag="mtcp";
+        _desc="Moving Towards Fixed Point";
     }
 
 
@@ -26,7 +27,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
     }
 
     @Override
-    JSONObject createData() {
+    public JSONObject createData() {
         JSONObject ob=new JSONObject();
         JSONArray data = new JSONArray();
 

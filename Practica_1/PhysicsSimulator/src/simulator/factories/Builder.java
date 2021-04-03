@@ -6,8 +6,6 @@ public abstract class Builder <T>{
     protected String _typeTag; // tipo de objeto a construir
     protected String _desc;   // descripcion del objeto
 
-    public Builder() {
-    }
 
     public T createInstance(JSONObject info){
         T b=null;
@@ -25,7 +23,9 @@ public abstract class Builder <T>{
         return info;
     }
 
-    abstract JSONObject createData();
+    protected JSONObject createData(){
+        return new JSONObject();
+    }
 
-    protected abstract T createTheInstance(JSONObject jsonObject);
+    protected abstract T createTheInstance(JSONObject data);
 }

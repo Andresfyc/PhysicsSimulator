@@ -9,8 +9,10 @@ import simulator.model.MassLossingBody;
 public class MassLosingBodyBuilder extends Builder<Body>{
 
 
-    public MassLosingBodyBuilder(String basic, String default_body) {
-        super("mlb", "Mass losing Body");
+    public MassLosingBodyBuilder() {
+        _typeTag="mlb";
+        _desc="Mass losing Body")
+
     }
 
     @Override
@@ -30,7 +32,7 @@ public class MassLosingBodyBuilder extends Builder<Body>{
     }
 
     @Override
-    JSONObject createData() {
+    public JSONObject createData() {
 
         JSONObject objeto= new JSONObject();
         JSONArray data=new JSONArray();

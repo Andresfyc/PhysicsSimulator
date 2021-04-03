@@ -8,12 +8,13 @@ import simulator.model.NewtonUniversalGravitation;
 public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 
     public NewtonUniversalGravitationBuilder() {
-        TypeTag="nlug"
-        super("nlug", "Newton law of Universal Gravitation");
+       _typeTag="nlug";
+       _desc="Newton law of Universal Gravitation";
+
     }
 
     @Override
-    JSONObject createData() {
+   public JSONObject createData() {
         return null;
     }
 

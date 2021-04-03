@@ -9,8 +9,8 @@ public class BasicBodyBuilder extends Builder<Body>{
 
     public BasicBodyBuilder() {
 
-        super("basic", "Default Body");
-
+        _typeTag="basic";
+        _desc="Default Body";
     }
 
 
@@ -28,7 +28,7 @@ public class BasicBodyBuilder extends Builder<Body>{
     }
 
     @Override
-    JSONObject createData() {
+    public JSONObject createData() {
 
         JSONObject objeto= new JSONObject();
         JSONArray data=new JSONArray();

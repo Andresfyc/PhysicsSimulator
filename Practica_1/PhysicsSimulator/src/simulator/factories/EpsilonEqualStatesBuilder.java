@@ -6,12 +6,14 @@ import simulator.control.StateComparator;
 
 public class EpsilonEqualStatesBuilder extends Builder<StateComparator>{
 
-    public EpsilonEqualStatesBuilder(String _typeTag, String _desc) {
-        super("epseq", "Epsilon Equal State Comparator");
+    public EpsilonEqualStatesBuilder() {
+        _typeTag="epseq";
+        _desc="Epsilon Equal State Comparator";
+
     }
 
     @Override
-    JSONObject createData() {
+    public JSONObject createData() {
         JSONObject data = new JSONObject();
         data.put("eps", "the allowed error");
         return data;

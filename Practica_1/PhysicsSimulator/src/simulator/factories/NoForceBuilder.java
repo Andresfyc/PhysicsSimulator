@@ -7,13 +7,14 @@ import simulator.model.NoForce;
 public class NoForceBuilder extends Builder<ForceLaws>{
 
 
-    public NoForceBuilder(String _typeTag, String _desc) {
-
-        super("nf", "No Force");
+    public NoForceBuilder() {
+    _typeTag="nf";
+    _desc="No Force";
+;
     }
 
     @Override
-    JSONObject createData() {
+   public JSONObject createData() {
         return null;
     }
 
