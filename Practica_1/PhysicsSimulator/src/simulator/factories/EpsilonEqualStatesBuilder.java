@@ -19,7 +19,7 @@ public class EpsilonEqualStatesBuilder extends Builder<StateComparator>{
 
     @Override
     protected StateComparator createTheInstance(JSONObject jsonObject) {
-        double eps = jsonObject.has("eps") ? jsonObject.getDouble("eps") : 0.0;
+        double eps = jsonObject.has("eps") ? jsonObject.getDouble("eps") : 0.1;
         return new EpsilonEqualStates(eps);
     }
 }

@@ -22,8 +22,8 @@ public class MassLosingBodyBuilder extends Builder<Body>{
         vector=data.getJSONArray("v");
         Vector2D v=new Vector2D(vector.getDouble(0),vector.getDouble(1));
         double m=data.getDouble("m");
-        double lossFactor=data.getDouble("lossFactor");
-        double lossFrequency=data.getDouble("lossFrequency");
+        double lossFactor=data.getDouble("factor");
+        double lossFrequency=data.getDouble("freq");
 
         return new MassLossingBody(id,v,p,m,lossFactor,lossFrequency);
 
@@ -35,19 +35,21 @@ public class MassLosingBodyBuilder extends Builder<Body>{
         JSONObject objeto= new JSONObject();
         JSONArray data=new JSONArray();
 
-        /*
         objeto.put("id","b1");
-        data.put(0.0e00);
+        data.put(-3.5e10);
         data.put(0.0e00);
         objeto.put("p",data);
 
         data=new JSONArray();
-        data.put(0.05e04);
         data.put(0.0e00);
+        data.put(1.4e03);
         objeto.put("v",data);
 
-        objeto.put("m",5.97e24);
-*/
+        objeto.put("m",3.0e28);
+        objeto.put("freq",1e3);
+        objeto.put("factor",1e-3);
+
+
         return objeto;
 
     }

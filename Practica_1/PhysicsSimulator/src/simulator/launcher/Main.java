@@ -290,7 +290,7 @@ public class Main {
 		OutputStream os = _outFile == null ?
 				System.out : new FileOutputStream(new File(_outFile));
 
-		PhysicsSimulator ps = new PhysicsSimulator();
+		PhysicsSimulator ps = new PhysicsSimulator(_forceLawsFactory.createInstance(_forceLawsInfo),_dtime);
 		Controller co = new Controller(ps, _bodyFactory);
 
 		InputStream expOut = null;
@@ -303,6 +303,7 @@ public class Main {
 
 		co.run(_steps, os, expOut, stateCmp);
 		co.loadBodies(is);
+
 
 	}
 

@@ -13,8 +13,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 
     @Override
     JSONObject createData() {
-        JSONObject data = new JSONObject();
-        return data;
+        return null;
     }
 
     @Override
