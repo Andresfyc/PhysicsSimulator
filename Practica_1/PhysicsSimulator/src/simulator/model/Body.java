@@ -13,7 +13,7 @@ public class Body {
     protected Vector2D force;
     protected Vector2D position;
     protected double mass;
-    protected double tiempo;
+
 
 
 
@@ -49,7 +49,7 @@ public class Body {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Body body = (Body) o;
-        return Double.compare(body.mass, mass) == 0 && Double.compare(body.tiempo, tiempo) == 0 && Objects.equals(id, body.id) && Objects.equals(velocity, body.velocity) && Objects.equals(force, body.force) && Objects.equals(position, body.position) &&  Objects.equals(state, body.state);
+        return Double.compare(body.mass, mass) == 0 && Objects.equals(id, body.id) && Objects.equals(velocity, body.velocity) && Objects.equals(force, body.force) && Objects.equals(position, body.position) &&  Objects.equals(state, body.state);
     }
 
 
