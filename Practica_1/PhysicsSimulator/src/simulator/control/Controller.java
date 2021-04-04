@@ -35,6 +35,8 @@ public class Controller {
 
     public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp){
 
+
+
         JSONObject expOutJO = null;
         if (expOut != null) expOutJO = new JSONObject(new JSONTokener(expOut));
         if (out == null){
@@ -49,6 +51,9 @@ public class Controller {
         PrintStream p = new PrintStream(out);
         p.println("{");
         p.println("\"states\": [");
+
+        for (int i = 0; i < n; i++) {
+
         JSONObject currState = null;
         JSONObject expState = null;
 
@@ -56,24 +61,29 @@ public class Controller {
         currState = ps.getState();
         p.println(currState);
 
+
+
         if (expOutJO != null){
-            expState = expOutJO.getJSONArray("states").getJSONObject(0);
+            expState = expOutJO.getJSONArray("states").getJSONObject(i);
             if (!cmp.equal(expState,currState));
                 //throw new NotEqualStatesException(expState,currState,0);
         }
 
         // for para comparar el resto de pasos y lanzar excepcion
-        for (int i = 0; i < n; i++) {
-            ps.advance();
-            while (expOutJO != null){
-                expState = expOutJO.getJSONArray("states").getJSONObject(i);
-                if (!cmp.equal(expState,currState));
-               // throw new NotEqualStatesException(expState,currState, ps, i);
-            }
-        }
+//            while (expOutJO != null){
+//                expState = expOutJO.getJSONArray("states").getJSONObject(i);
+//                if (!cmp.equal(expState,currState));
+//               // throw new NotEqualStatesException(expState,currState, ps, i);
+//            }
 
+
+
+        }
+        ps.advance();
         p.println("]");
         p.println("}");
+
+
     }
 
 

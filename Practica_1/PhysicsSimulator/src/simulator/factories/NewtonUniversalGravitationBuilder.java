@@ -20,7 +20,7 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {
-        double G = data.has("_G") ? data.getDouble("_G") : 6.67E-11;
+        double G = data.has("G") ? data.getDouble("G") : 6.67E-11;
         return new NewtonUniversalGravitation(G);
     }
 }
