@@ -1,6 +1,5 @@
 package simulator.control;
 
-import com.sun.org.apache.xpath.internal.operations.NotEquals;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -53,17 +52,25 @@ public class Controller {
         JSONObject currState = null;
         JSONObject expState = null;
 
+        //comparacion de los estados iniciales
         currState = ps.getState();
         p.println(currState);
 
         if (expOutJO != null){
             expState = expOutJO.getJSONArray("states").getJSONObject(0);
             if (!cmp.equal(expState,currState));
-               // throw new NotEqualStatesException(expState,currState,0);
+                //throw new NotEqualStatesException(expState,currState,0);
         }
 
         // for para comparar el resto de pasos y lanzar excepcion
-
+        for (int i = 0; i < n; i++) {
+            ps.advance();
+            while (expOutJO != null){
+                expState = expOutJO.getJSONArray("states").getJSONObject(i);
+                if (!cmp.equal(expState,currState));
+               // throw new NotEqualStatesException(expState,currState, ps, i);
+            }
+        }
 
         p.println("]");
         p.println("}");

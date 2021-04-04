@@ -7,47 +7,53 @@ import java.util.List;
 
 public class PhysicsSimulator {
 
-    ForceLaws lawForce;
-    double realTimeStep;
-    double currentTime= 0.0;
-    List<Body> listBody = new ArrayList<Body>();
+    private ForceLaws _forceLaws; //ley de fuerza a aplicar
+    private List<Body> listBody ; //cuerpos de la simulacion
+    private double _dt; //incremento del tiempo
+    private double _time= 0.0; //numero de pasos que se ejecuta la simulacion
 
-    public PhysicsSimulator(ForceLaws lawForce, double realTimeStep) {
-        this.lawForce = lawForce;
-        this.realTimeStep = realTimeStep;
+
+    public PhysicsSimulator(ForceLaws forceLaws, double time) {
+        if (forceLaws == null ) throw new IllegalArgumentException("valor de la fuerza no es valido");
+        else _forceLaws = forceLaws;
+
+        if (time < 0 && time > 1 ) throw new IllegalArgumentException("Tiempo real por paso no es valido");
+        else _time = time;
     }
 
-    public void advance() throws IllegalArgumentException {
+    public void addBody(Body b)  {
+
+
+
+        for (Body bs: listBody) {
+            if (b.getId().equals(bs.getId()))throw new IllegalArgumentException("Cuerpos iguales");
+            else listBody.add(b);
+
+        }
+
+    }
+
+    public void advance() {
 
         for (Body b: listBody) {
             b.resetForce();
         }
 
-        lawForce.apply(listBody);
+        _forceLaws.apply(listBody);
 
         for (Body bs: listBody) {
-            bs.move(realTimeStep);
-            currentTime+=realTimeStep;
+            bs.move(_time);
+            _dt+=_time;
         }
 
     }
 
-    public void addBody(Body b) throws IllegalArgumentException {
 
-        for (Body bs: listBody) {
-            if (b.getId() == bs.getId()){
-
-            }else{
-                listBody.add(b);
-            }
-        }
-
-    }
 
     JSONObject state;
     {
         state = new JSONObject();
-        state.put("time", currentTime);
+        state.put("time", _dt);
         state.put("bodies", listBody);
 
     }

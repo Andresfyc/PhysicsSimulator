@@ -14,9 +14,6 @@ public class Body {
     protected Vector2D position;
     protected double mass;
 
-
-
-
     public Body(String id, Vector2D velocity, Vector2D position, double mass) {
         this.id = id;
         this.velocity = velocity;
@@ -49,7 +46,7 @@ public class Body {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Body body = (Body) o;
-        return Double.compare(body.mass, mass) == 0 && Objects.equals(id, body.id) && Objects.equals(velocity, body.velocity) && Objects.equals(force, body.force) && Objects.equals(position, body.position) &&  Objects.equals(state, body.state);
+        return Objects.equals(id, body.id) ;
     }
 
 
@@ -58,7 +55,7 @@ public class Body {
         state = new JSONObject();
         state.put("id", getId());
         state.put("m", getMass());
-        state.put("p", getPosition().asJSONArray());
+        state.put("p", getPosition());
         state.put("v", getVelocity());
         state.put("f", getForce());
 
@@ -85,32 +82,17 @@ public class Body {
         return velocity;
     }
 
-    public void setVelocity(Vector2D velocity) {
-        this.velocity = velocity;
-    }
-
     public Vector2D getForce() {
         return force;
-    }
-
-    public void setForce(Vector2D force) {
-        this.force = force;
     }
 
     public Vector2D getPosition() {
         return position;
     }
 
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
-
     public double getMass() {
         return mass;
     }
 
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
 
 }

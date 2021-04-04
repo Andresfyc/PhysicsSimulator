@@ -7,11 +7,10 @@ import java.util.List;
 public class NewtonUniversalGravitation implements ForceLaws {
 
     private double fij;
-
     protected double _G;
 
-    public NewtonUniversalGravitation(double _G) {
-        this._G = _G;
+    public NewtonUniversalGravitation(double G) {
+        this._G = G;
     }
 
     private Vector2D force(Body a, Body b) {

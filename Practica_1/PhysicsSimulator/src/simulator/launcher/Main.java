@@ -208,9 +208,9 @@ public class Main {
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		_outFile = line.getOptionValue("o");
-		if (_outFile == null) {
-			throw new ParseException("out file of bodies is required");
-		}
+//		if (_outFile == null) {
+//			throw new ParseException("out file of bodies is required");
+//		}
 	}
 
 	private static void parseExpOutFileOption(CommandLine line) throws ParseException {
@@ -315,8 +315,10 @@ public class Main {
 			stateCmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
 		}
 
+
 		co.run(_steps, os, expOut, stateCmp);
 		co.loadBodies(is);
+
 
 
 	}

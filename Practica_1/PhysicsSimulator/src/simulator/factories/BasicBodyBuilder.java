@@ -15,7 +15,7 @@ public class BasicBodyBuilder extends Builder<Body>{
 
     @Override
     protected Body createTheInstance(JSONObject data) {
-        String id=data.getString("id");
+        String id = data.getString("id");
         JSONArray vector= data.getJSONArray("p");
         Vector2D p=new Vector2D(vector.getDouble(0),vector.getDouble(1));
         vector=data.getJSONArray("v");
