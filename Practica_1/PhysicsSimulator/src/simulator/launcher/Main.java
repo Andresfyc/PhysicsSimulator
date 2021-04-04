@@ -314,13 +314,8 @@ public class Main {
 			expOut = new FileInputStream(new File(_expOutFile));
 			stateCmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
 		}
-
-
-		co.run(_steps, os, expOut, stateCmp);
 		co.loadBodies(is);
-
-
-
+		co.run(_steps, os, expOut, stateCmp);
 	}
 
 	private static void start(String[] args) throws Exception {

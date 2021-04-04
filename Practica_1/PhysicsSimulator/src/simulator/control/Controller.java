@@ -34,15 +34,12 @@ public class Controller {
     }
 
     public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp){
-
-
-
         JSONObject expOutJO = null;
         if (expOut != null) expOutJO = new JSONObject(new JSONTokener(expOut));
         if (out == null){
             out = new OutputStream() {
                 @Override
-                public void write(int b) throws IOException {
+                public void write(int b) throws  IOException {
 
                 }
             };
@@ -52,38 +49,31 @@ public class Controller {
         p.println("{");
         p.println("\"states\": [");
 
-        for (int i = 0; i < n; i++) {
-
         JSONObject currState = null;
         JSONObject expState = null;
 
         //comparacion de los estados iniciales
         currState = ps.getState();
         p.println(currState);
-
-
-
         if (expOutJO != null){
-            expState = expOutJO.getJSONArray("states").getJSONObject(i);
+            expState = expOutJO.getJSONArray("states").getJSONObject(0);
             if (!cmp.equal(expState,currState));
                 //throw new NotEqualStatesException(expState,currState,0);
         }
 
-        // for para comparar el resto de pasos y lanzar excepcion
-//            while (expOutJO != null){
-//                expState = expOutJO.getJSONArray("states").getJSONObject(i);
-//                if (!cmp.equal(expState,currState));
-//               // throw new NotEqualStatesException(expState,currState, ps, i);
-//            }
+             for (int i = 1; i < n; i++) {
+                 ps.advance();
 
-
-
+                 currState = ps.getState();
+                 p.println(currState);
+                if (expOutJO != null){
+                     expState = expOutJO.getJSONArray("states").getJSONObject(i);
+                     if (!cmp.equal(expState,currState));
+                     //throw new NotEqualStatesException(expState,currState, i);
+                 }
         }
-        ps.advance();
         p.println("]");
         p.println("}");
-
-
     }
 
 
