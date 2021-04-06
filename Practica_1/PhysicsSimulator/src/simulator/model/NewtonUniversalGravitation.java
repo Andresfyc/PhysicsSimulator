@@ -37,7 +37,6 @@ public class NewtonUniversalGravitation implements ForceLaws {
                 }
             }
             Bi.addForce(F);
-            System.out.println("----->"+F);
         }
 
     }
