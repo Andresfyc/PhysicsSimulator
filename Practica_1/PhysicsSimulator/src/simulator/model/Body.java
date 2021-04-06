@@ -50,25 +50,34 @@ public class Body {
     }
 
 
-    JSONObject state;
-    {
-        state = new JSONObject();
-        state.put("id", getId());
-        state.put("m", getMass());
-        state.put("p", getPosition());
-        state.put("v", getVelocity());
-        state.put("f", getForce());
-
-    }
+//    JSONObject state;
+//    {
+//        state = new JSONObject();
+//        state.put("id", getId());
+//        state.put("m", getMass());
+//        state.put("p", getPosition());
+//        state.put("v", getVelocity());
+//        state.put("f", getForce());
+//
+//    }
 
     public JSONObject getState() {
-        return state;
+        JSONObject stateBody = new JSONObject();
+        stateBody.put("id",getId());
+        stateBody.put("m", getMass());
+        stateBody.put("p", getPosition().asJSONArray());
+        stateBody.put("v", getVelocity().asJSONArray());
+        stateBody.put("f", getForce().asJSONArray());
+        return stateBody;
     }
 
     @Override
     public String toString() {
         return getState().toString();
     }
+
+
+
 
     public String getId() {
         return id;

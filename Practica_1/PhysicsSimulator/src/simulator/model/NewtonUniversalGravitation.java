@@ -45,7 +45,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
     public String toString() {
         return "NewtonUniversalGravitation{" +
                 "fij=" + fij +
-                ", _G=" + _G +
+                ", G=" + _G +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -34,19 +35,26 @@ public class PhysicsSimulator {
         for (int i = 0; i < listBody.size(); i++) {
             listBody.get(i).move(_dt);
         }
-        _time=_dt;
+        _time+=_dt;
 
     }
 
-    JSONObject state;
-    {
-        state = new JSONObject();
-        state.put("time", get_time());
-        state.put("bodies", getListBody());
-
-    }
+//    JSONObject state;
+//    {
+//        state = new JSONObject();
+//        state.put("time", this._time);
+//        state.put("bodies", this.listBody);
+//
+//    }
 
     public JSONObject getState() {
+        JSONObject state = new JSONObject();
+        JSONArray bodies = new JSONArray();
+        state.put("time", this._time);
+        for (int i = 0; i < listBody.size(); i++) {
+            bodies.put(listBody.get(i).getState());
+        }
+        state.put("bodies", bodies);
         return state;
     }
 
@@ -54,11 +62,6 @@ public class PhysicsSimulator {
         return getState().toString();
     }
 
-    public List<Body> getListBody() {
-        return listBody;
-    }
 
-    public double get_time() {
-        return _time;
-    }
+
 }
