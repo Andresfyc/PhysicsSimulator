@@ -16,9 +16,10 @@ public class Body {
 
     public Body(String id, Vector2D velocity, Vector2D position, double mass) {
         this.id = id;
-        this.velocity = velocity;
-        this.position = position;
+        this.velocity = new Vector2D(velocity);
+        this.position = new Vector2D(position);
         this.mass = mass;
+        force=new Vector2D();
     }
 
 

@@ -23,7 +23,7 @@ public class BasicBodyBuilder extends Builder<Body>{
         double m=data.getDouble("m");
 
 
-        return new Body(id,p,v,m);
+        return new Body(id,v,p,m);
     }
 
     @Override

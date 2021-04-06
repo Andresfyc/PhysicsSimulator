@@ -21,22 +21,22 @@ public class PhysicsSimulator {
         this.listBody =new ArrayList<Body>();
     }
 
-    public void addBody(Body b)  {
-        if (listBody.contains(b)) throw new IllegalArgumentException("Este cuerpo ya EXISTE");
-        listBody.add(b);
-    }
 
     public void advance() {
 
-        for (int i = 0; i < listBody.size(); i++) {
-            listBody.get(i).resetForce();
+      for (int i = 0; i < listBody.size(); i++) {
+           listBody.get(i).resetForce();
         }
-        _forceLaws.apply(listBody);
+       _forceLaws.apply(listBody);
         for (int i = 0; i < listBody.size(); i++) {
-            listBody.get(i).move(_dt);
-        }
-        _time+=_dt;
+           listBody.get(i).move(_dt);
+       }
+       _time+=_dt;
 
+    }
+    public void addBody(Body b)  {
+        if (listBody.contains(b)) throw new IllegalArgumentException("Este cuerpo ya EXISTE");
+        listBody.add(b);
     }
 
 //    JSONObject state;
@@ -48,13 +48,19 @@ public class PhysicsSimulator {
 //    }
 
     public JSONObject getState() {
-        JSONObject state = new JSONObject();
+
+
+
+     JSONObject state = new JSONObject();
         JSONArray bodies = new JSONArray();
         state.put("time", this._time);
         for (int i = 0; i < listBody.size(); i++) {
             bodies.put(listBody.get(i).getState());
+
+
         }
         state.put("bodies", bodies);
+
         return state;
     }
 
