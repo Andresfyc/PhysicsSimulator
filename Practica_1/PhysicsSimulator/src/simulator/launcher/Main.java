@@ -61,14 +61,14 @@ public class Main {
 	private static void init() {
 		// TODO initialize the bodies factory
 
-		ArrayList<Builder<Body>> bodyBuilders =new ArrayList<Builder<Body>>();
+		ArrayList<Builder<Body>> bodyBuilders =new ArrayList<>();
 		bodyBuilders.add(new BasicBodyBuilder());
 		bodyBuilders.add(new MassLosingBodyBuilder());
 		_bodyFactory = new BuilderBasedFactory<Body>(bodyBuilders);
 
 		// TODO initialize the force laws factory
 
-		ArrayList<Builder<ForceLaws>> forceBuilders =new ArrayList<Builder<ForceLaws>>();
+		ArrayList<Builder<ForceLaws>> forceBuilders =new ArrayList<>();
 		forceBuilders.add(new NewtonUniversalGravitationBuilder());
 		forceBuilders.add(new MovingTowardsFixedPointBuilder());
 		forceBuilders.add(new NoForceBuilder());
@@ -77,7 +77,7 @@ public class Main {
 
 		// TODO initialize the state comparator
 
-		ArrayList<Builder<StateComparator>> stateBuilders =new ArrayList<Builder<StateComparator>>();
+		ArrayList<Builder<StateComparator>> stateBuilders =new ArrayList<>();
 		stateBuilders.add(new EpsilonEqualStatesBuilder());
 		stateBuilders.add(new MassEqualStatesBuilder());
 		_stateComparatorFactory = new BuilderBasedFactory<StateComparator>(stateBuilders);

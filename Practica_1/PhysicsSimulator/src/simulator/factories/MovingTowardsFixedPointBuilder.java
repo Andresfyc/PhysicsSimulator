@@ -17,24 +17,25 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
 
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {
+        Vector2D c;
+        if (data.has("c")) {
+            JSONArray vector = data.getJSONArray("c");
+            c = new Vector2D(vector.getDouble(0), vector.getDouble(1));
+        }else{
+            c=new Vector2D();
+        }
 
-        JSONArray V=data.getJSONArray("c");
-        Vector2D c = new Vector2D(V.getDouble(0),V.getDouble(1));
-        double g = data.has("g") ? data.getDouble("g") : 9.81;
-        //Vector2D c = data.has("c") ? data.getJSONArray("c") : [0,0]);
+      double g = data.has("g") ? data.getDouble("g") : 9.81;
+
 
         return new MovingTowardsFixedPoint(g,c);
     }
 
     @Override
     public JSONObject createData() {
-        JSONObject ob=new JSONObject();
-        JSONArray data = new JSONArray();
-
-        data.put(0.0);
-        data.put(0.0);
-        ob.put("c",data);
-        ob.put("g",9.81);
-        return ob;
+        JSONObject data= new JSONObject();
+        data.put("c","const");
+        data.put("g","gravity");
+        return data;
     }
 }

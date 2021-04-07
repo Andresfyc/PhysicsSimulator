@@ -13,14 +13,19 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 
     }
 
-    @Override
-   public JSONObject createData() {
-        return null;
-    }
+
 
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {
         double G = data.has("G") ? data.getDouble("G") : 6.67E-11;
         return new NewtonUniversalGravitation(G);
+    }
+
+    @Override
+    public JSONObject createData() {
+
+        JSONObject data= new JSONObject();
+        data.put("G","Gravity");
+        return data;
     }
 }

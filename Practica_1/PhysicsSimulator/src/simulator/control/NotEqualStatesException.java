@@ -12,7 +12,7 @@ public class NotEqualStatesException extends RuntimeException{
 
     public NotEqualStatesException(JSONObject exp, JSONObject act, int step) {
        super("States are different at step "+ step + System.lineSeparator() +
-               "Actual: " + act + System.lineSeparator() +
+               "Actual:   " + act + System.lineSeparator() +
                "Expected: " + exp + System.lineSeparator()
             );
 
