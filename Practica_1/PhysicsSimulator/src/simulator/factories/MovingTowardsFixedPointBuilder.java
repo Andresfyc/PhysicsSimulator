@@ -34,7 +34,6 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
         data.put(0.0);
         data.put(0.0);
         ob.put("c",data);
-
         ob.put("g",9.81);
         return ob;
     }

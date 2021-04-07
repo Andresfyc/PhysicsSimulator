@@ -28,23 +28,27 @@ public class BasicBodyBuilder extends Builder<Body>{
 
     @Override
     public JSONObject createData() {
+        JSONObject data= new JSONObject();
+        data.put("id","identifier");
+        data.put("v","velocity");
+        data.put("p","body position");
+        data.put("m","mass");
+//        JSONObject objeto= new JSONObject();
+//        JSONArray data=new JSONArray();
+//
+//        objeto.put("id","b1");
+//        data.put(0.0e00);
+//        data.put(0.0e00);
+//        objeto.put("p",data);
+//
+//        data=new JSONArray();
+//        data.put(0.05e04);
+//        data.put(0.0e00);
+//        objeto.put("v",data);
+//
+//        objeto.put("m",5.97e24);
 
-        JSONObject objeto= new JSONObject();
-        JSONArray data=new JSONArray();
-
-        objeto.put("id","b1");
-        data.put(0.0e00);
-        data.put(0.0e00);
-        objeto.put("p",data);
-
-        data=new JSONArray();
-        data.put(0.05e04);
-        data.put(0.0e00);
-        objeto.put("v",data);
-
-        objeto.put("m",5.97e24);
-
-        return objeto;
+        return data;
     }
 
 }

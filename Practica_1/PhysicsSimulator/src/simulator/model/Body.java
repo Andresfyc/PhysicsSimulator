@@ -38,8 +38,8 @@ public class Body {
         if (mass == 0) acceleration = new Vector2D();// si m es cero, entonces se pone â a(0,0).
         else acceleration = force.scale(1/mass); // si no, â= f/m.
 
-        position.plus(velocity.scale(t).plus(acceleration.scale(0.5*t*t)));
-        velocity.plus(acceleration.scale(t));
+        position=position.plus(velocity.scale(t).plus(acceleration.scale(0.5*t*t)));
+        velocity=velocity.plus(acceleration.scale(t));
     }
 
     @Override

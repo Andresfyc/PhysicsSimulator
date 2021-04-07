@@ -24,7 +24,7 @@ public class EpsilonEqualStates implements StateComparator{
         if(s2_array.length()!=s1_array.length()) return false;
 
         for(int i=0; i<s1_array.length();i++){
-            if (s1_array.getJSONObject(i).getString("id")!=s2_array.getJSONObject(i).getString("id")) return false;
+            if (!s1_array.getJSONObject(i).getString("id").equals(s2_array.getJSONObject(i).getString("id"))) return false;
             if(Math.abs(s1_array.getJSONObject(i).getDouble("m")-s2_array.getJSONObject(i).getDouble("m"))>eps) return false;
             v1=new Vector2D(s1_array.getJSONObject(i).getJSONArray("p").getDouble(0),s1_array.getJSONObject(i).getJSONArray("p").getDouble(1));
             v2=new Vector2D(s2_array.getJSONObject(i).getJSONArray("p").getDouble(0),s2_array.getJSONObject(i).getJSONArray("p").getDouble(1));

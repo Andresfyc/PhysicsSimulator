@@ -6,7 +6,6 @@ import java.util.List;
 
 public class NewtonUniversalGravitation implements ForceLaws {
 
-    private double fij;
     protected double _G;
 
     public NewtonUniversalGravitation(double G) {
@@ -27,12 +26,13 @@ public class NewtonUniversalGravitation implements ForceLaws {
             F=new Vector2D();
             for (Body Bj: bs){
                 if(Bi!=Bj){
-                    fij=0;
                     if(Bi.getMass()==0.0){
                         Bi.velocity=new Vector2D();
 
                     }else{
-                        F = force(Bi,Bj);
+                        F= F.plus(force(Bi,Bj));
+
+
                     }
                 }
             }
@@ -44,7 +44,6 @@ public class NewtonUniversalGravitation implements ForceLaws {
     @Override
     public String toString() {
         return "NewtonUniversalGravitation{" +
-                "fij=" + fij +
                 ", G=" + _G +
                 '}';
     }

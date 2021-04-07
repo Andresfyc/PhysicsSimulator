@@ -208,16 +208,11 @@ public class Main {
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		_outFile = line.getOptionValue("o");
-//		if (_outFile == null) {
-//			throw new ParseException("out file of bodies is required");
-//		}
 	}
 
 	private static void parseExpOutFileOption(CommandLine line) throws ParseException {
 		_expOutFile = line.getOptionValue("eo");
-		if (_expOutFile == null) {
-			throw new ParseException("expOut file of bodies is required");
-		}
+
 	}
 
 	private static void parseStepsOption(CommandLine line) throws ParseException {

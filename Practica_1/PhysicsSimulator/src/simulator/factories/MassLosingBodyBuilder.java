@@ -34,25 +34,33 @@ public class MassLosingBodyBuilder extends Builder<Body>{
     @Override
     public JSONObject createData() {
 
-        JSONObject objeto= new JSONObject();
-        JSONArray data=new JSONArray();
+            JSONObject data= new JSONObject();
+            data.put("id","indentifier");
+            data.put("v","velocity");
+            data.put("p","body position");
+            data.put("m","mass");
+            data.put("freq", "frecuency");
+            data.put("factor","factory");
 
-        objeto.put("id","b1");
-        data.put(-3.5e10);
-        data.put(0.0e00);
-        objeto.put("p",data);
+//        JSONObject objeto= new JSONObject();
+//        JSONArray data=new JSONArray();
+//
+//        objeto.put("id","b1");
+//        data.put(-3.5e10);
+//        data.put(0.0e00);
+//        objeto.put("p",data);
+//
+//        data=new JSONArray();
+//        data.put(0.0e00);
+//        data.put(1.4e03);
+//        objeto.put("v",data);
+//
+//        objeto.put("m",3.0e28);
+//        objeto.put("freq",1e3);
+//        objeto.put("factor",1e-3);
 
-        data=new JSONArray();
-        data.put(0.0e00);
-        data.put(1.4e03);
-        objeto.put("v",data);
 
-        objeto.put("m",3.0e28);
-        objeto.put("freq",1e3);
-        objeto.put("factor",1e-3);
-
-
-        return objeto;
+        return data;
 
     }
 

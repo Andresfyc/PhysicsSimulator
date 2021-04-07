@@ -24,13 +24,21 @@ public class PhysicsSimulator {
 
     public void advance() {
 
-      for (int i = 0; i < listBody.size(); i++) {
-           listBody.get(i).resetForce();
+
+        for(Body b:listBody){
+            b.resetForce();
         }
+//      for (int i = 0; i < listBody.size(); i++) {
+//           listBody.get(i).resetForce();
+//        }
        _forceLaws.apply(listBody);
-        for (int i = 0; i < listBody.size(); i++) {
-           listBody.get(i).move(_dt);
-       }
+        for(Body b:listBody){
+            b.move(_dt);
+        }
+
+//        for (int i = 0; i < listBody.size(); i++) {
+//           listBody.get(i).move(_dt);
+//       }
        _time+=_dt;
 
     }
@@ -54,11 +62,14 @@ public class PhysicsSimulator {
      JSONObject state = new JSONObject();
         JSONArray bodies = new JSONArray();
         state.put("time", this._time);
-        for (int i = 0; i < listBody.size(); i++) {
-            bodies.put(listBody.get(i).getState());
-
-
+        for (Body b:listBody){
+            bodies.put(b.getState());
         }
+//        for (int i = 0; i < listBody.size(); i++) {
+//            bodies.put(listBody.get(i).getState());
+//
+//
+//        }
         state.put("bodies", bodies);
 
         return state;
