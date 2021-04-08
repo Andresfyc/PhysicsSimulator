@@ -14,7 +14,7 @@ public class MassLosingBodyBuilder extends Builder<Body>{
         _desc="Mass losing Body";
 
     }
-
+//Crea los obejtos de la clase
     @Override
     protected Body createTheInstance(JSONObject data) {
 

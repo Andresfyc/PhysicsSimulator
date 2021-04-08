@@ -22,15 +22,16 @@ public class Body {
         force=new Vector2D();
     }
 
-
+    //Añade la fuerza
     void addForce(Vector2D f){
         force = force.plus(f);
     }
-
+    //resetea la fuerza
     void resetForce(){
         force = new Vector2D();
     }
 
+    //Mueve el cuerpo
     void move(double t){
 
         Vector2D acceleration;
@@ -51,17 +52,7 @@ public class Body {
     }
 
 
-//    JSONObject state;
-//    {
-//        state = new JSONObject();
-//        state.put("id", getId());
-//        state.put("m", getMass());
-//        state.put("p", getPosition());
-//        state.put("v", getVelocity());
-//        state.put("f", getForce());
-//
-//    }
-
+        // devuelve los estados del cuerpo
     public JSONObject getState() {
         JSONObject stateBody = new JSONObject();
         stateBody.put("id",getId());
@@ -79,7 +70,7 @@ public class Body {
 
 
 
-
+//identificador del cuerpo
     public String getId() {
         return id;
     }
@@ -88,18 +79,22 @@ public class Body {
         this.id = id;
     }
 
+    //Devuelve el vector velocidad
     public Vector2D getVelocity() {
         return velocity;
     }
 
+    //devuelve el vector fuerza
     public Vector2D getForce() {
         return force;
     }
 
+    //Devuelve el vector Posición
     public Vector2D getPosition() {
         return position;
     }
 
+//devuelve la masa del cuerpo
     public double getMass() {
         return mass;
     }

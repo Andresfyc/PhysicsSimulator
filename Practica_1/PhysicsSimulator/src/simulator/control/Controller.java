@@ -22,7 +22,7 @@ public class Controller {
         this.fb = fb;
     }
 
-
+    //carga los cuerpos
     public void  loadBodies(InputStream in){
 
         JSONObject jsonInupt = new JSONObject(new JSONTokener(in));
@@ -33,6 +33,7 @@ public class Controller {
         }
     }
 
+    //Ejecuta el simulador en (N) pasos
     public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) throws NotEqualStatesException{
         JSONObject expOutJO = null;
         if (expOut != null) expOutJO = new JSONObject(new JSONTokener(expOut));
@@ -52,7 +53,7 @@ public class Controller {
         JSONObject currState = null;
         JSONObject expState = null;
 
-        //comparacion de los estados iniciales
+        //comparación de los estados iniciales
         currState = ps.getState();
         p.println(currState);
         if (expOutJO != null){
@@ -60,7 +61,7 @@ public class Controller {
             if (!cmp.equal(expState,currState))
                 throw new NotEqualStatesException(expState,currState,0);
         }
-
+         //comparación de los estados restantes
              for (int i = 1; i <= n; i++) {
                  ps.advance();
 

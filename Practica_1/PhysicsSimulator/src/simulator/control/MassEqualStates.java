@@ -10,8 +10,10 @@ public class MassEqualStates implements StateComparator{
     @Override
     public boolean equal(JSONObject s1, JSONObject s2) {
 
+        //Compara si los time son iguales
         if (s1.get("time").equals(s2.get("time"))) return true;
 
+        //compara si tiene el mismo id o masa
         for (int i=0; i < s1.length(); i++){
             if ((s1.get("id").equals(s2.get("id"))) && (s1.get("mass").equals(s2.get("mass")))){
                 return true;

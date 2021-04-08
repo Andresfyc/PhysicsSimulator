@@ -11,7 +11,7 @@ public class EpsilonEqualStatesBuilder extends Builder<StateComparator>{
         _desc="Epsilon Equal State Comparator";
 
     }
-
+    //Para crear objetos de la clase
     @Override
     public JSONObject createData() {
         JSONObject data = new JSONObject();

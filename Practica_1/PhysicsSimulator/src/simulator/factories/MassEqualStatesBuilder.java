@@ -12,7 +12,7 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
         _desc="Mass Equal State";
     }
 
-
+    //Para crear objetos de la clase
     @Override
     protected StateComparator createTheInstance(JSONObject data) {
         return new MassEqualStates();

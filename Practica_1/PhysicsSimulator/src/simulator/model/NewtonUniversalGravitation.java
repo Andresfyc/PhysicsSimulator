@@ -12,6 +12,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
         this.G = G;
     }
 
+    //Operaciones de la Ley de Newton
     private Vector2D force(Body a, Body b) {
         Vector2D delta = b.getPosition().minus(a.getPosition());
         double dist = delta.magnitude();
@@ -19,6 +20,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
         return delta.direction().scale(magnitude);
     }
 
+    //Aplica la fuerza gravitacional uno sobre otro
     @Override
     public void apply(List<Body> bs) {
         Vector2D F;

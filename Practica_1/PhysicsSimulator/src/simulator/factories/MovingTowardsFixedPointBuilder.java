@@ -14,7 +14,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws>{
         _desc="Moving Towards Fixed Point";
     }
 
-
+    //Para crear objetos de la clase
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {
         Vector2D c;

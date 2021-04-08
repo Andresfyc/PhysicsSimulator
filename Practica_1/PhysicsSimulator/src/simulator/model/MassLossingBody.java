@@ -26,10 +26,12 @@ public class MassLossingBody extends Body{
         }
     }
 
+    //Devuelve la perdida de la masa
     public double getLossFactor() {
         return lossFactor;
     }
 
+    //devuelve el tiempo despues del cual el objeto pierde masa
     public double getLossFrequency() {
         return lossFrequency;
     }

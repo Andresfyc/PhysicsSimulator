@@ -12,7 +12,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
     _desc="No Force";
 
     }
-
+//Para crear objetos de la clase
 
     @Override
     protected ForceLaws createTheInstance(JSONObject data) {

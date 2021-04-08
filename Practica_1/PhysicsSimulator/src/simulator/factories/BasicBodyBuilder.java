@@ -11,7 +11,7 @@ public class BasicBodyBuilder extends Builder<Body>{
         _typeTag="basic";
         _desc="Default Body";
     }
-
+//para crear objetos de la clase Body
 
     @Override
     protected Body createTheInstance(JSONObject data) throws IllegalArgumentException{

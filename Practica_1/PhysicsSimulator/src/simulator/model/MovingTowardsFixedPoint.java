@@ -11,10 +11,11 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 
 
     public MovingTowardsFixedPoint(double g, Vector2D c) {
-        this.g = g;
-        this.c =new Vector2D(c);
+        this.g = g; //gravedad
+        this.c =new Vector2D(c); //Punto Fijo
     }
 
+    //Aplica las formulas
     @Override
     public void apply(List<Body> bs) {
 
@@ -24,21 +25,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 
     }
 
-    public double getG() {
-        return g;
-    }
 
-    public void setG(double g) {
-        this.g = g;
-    }
-
-    public Vector2D getC() {
-        return c;
-    }
-
-    public void setC(Vector2D c) {
-        this.c = c;
-    }
 
     @Override
     public String toString() {

@@ -12,6 +12,7 @@ public class EpsilonEqualStates implements StateComparator{
         this.eps = eps;
     }
 
+    //Compara los estados
     @Override
     public boolean equal(JSONObject s1, JSONObject s2) {
 
