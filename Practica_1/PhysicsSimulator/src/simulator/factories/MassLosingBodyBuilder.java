@@ -42,22 +42,6 @@ public class MassLosingBodyBuilder extends Builder<Body>{
             data.put("freq", "frecuency");
             data.put("factor","factory");
 
-//        JSONObject objeto= new JSONObject();
-//        JSONArray data=new JSONArray();
-//
-//        objeto.put("id","b1");
-//        data.put(-3.5e10);
-//        data.put(0.0e00);
-//        objeto.put("p",data);
-//
-//        data=new JSONArray();
-//        data.put(0.0e00);
-//        data.put(1.4e03);
-//        objeto.put("v",data);
-//
-//        objeto.put("m",3.0e28);
-//        objeto.put("freq",1e3);
-//        objeto.put("factor",1e-3);
 
 
         return data;

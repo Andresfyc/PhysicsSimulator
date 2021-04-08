@@ -17,7 +17,7 @@ public class MassLossingBody extends Body{
     }
 
     @Override
-    void move(double t) {
+    void move(double t) throws IllegalArgumentException {
         super.move(t);
         accumulatedTime += t;
         if (accumulatedTime >= lossFrequency ){
