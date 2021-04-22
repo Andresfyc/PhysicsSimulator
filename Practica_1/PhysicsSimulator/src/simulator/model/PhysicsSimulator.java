@@ -2,7 +2,6 @@ package simulator.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +60,12 @@ public class PhysicsSimulator {
 
         return state;
     }
+
+//  añade o a la lista de observadores, si es que no está ya en ella.
+    public void addObserver(SimulatorObserver o){
+
+    }
+
 
     public String toString() {
         return getState().toString();

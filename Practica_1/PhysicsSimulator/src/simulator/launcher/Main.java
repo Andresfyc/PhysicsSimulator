@@ -178,7 +178,7 @@ public class Main {
 		if (factory == null)
 			return "No values found (the factory is null)";
 
-		String s = "";
+		String s = " ";
 
 		for (JSONObject fe : factory.getInfo()) {
 			if (s.length() > 0) {

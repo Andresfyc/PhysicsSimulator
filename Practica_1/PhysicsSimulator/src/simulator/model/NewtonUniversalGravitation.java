@@ -2,6 +2,7 @@ package simulator.model;
 
 import simulator.misc.Vector2D;
 
+
 import java.util.List;
 
 public class NewtonUniversalGravitation implements ForceLaws {
@@ -50,3 +51,5 @@ public class NewtonUniversalGravitation implements ForceLaws {
                 '}';
     }
 }
+
+
