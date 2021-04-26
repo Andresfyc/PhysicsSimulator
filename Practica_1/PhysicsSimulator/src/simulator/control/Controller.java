@@ -5,21 +5,26 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import simulator.factories.Factory;
 import simulator.model.Body;
+import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
+import simulator.model.SimulatorObserver;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 public class Controller {
 
     PhysicsSimulator ps;
     Factory<Body>  fb;
+    Factory<ForceLaws> fl;
 
-    public Controller(PhysicsSimulator ps, Factory<Body> fb) {
+    public Controller(PhysicsSimulator ps, Factory<Body> fb, Factory<ForceLaws> fl) {
         this.ps = ps;
         this.fb = fb;
+        this.fl=fl;
     }
 
     //carga los cuerpos
@@ -31,6 +36,23 @@ public class Controller {
         for (int i = 0; i < bodies.length() ; i++) {
             ps.addBody(fb.createInstance(bodies.getJSONObject(i)));
         }
+    }
+
+    public void reset(){
+       ps.reset();
+    }
+    public void SetDeltaTime(double dt){
+        ps.setDeltaTime(dt);
+    }
+    public void addObserver(SimulatorObserver o){
+        ps.addObserver(o);
+    }
+    public List<JSONObject> getForceLawsInfo(){
+        return fl.getInfo();
+    }
+    public void setForceLaws(JSONObject info){
+        ForceLaws gr = this.fl.createInstance(info);
+        ps.setForceLawsLaws(gr);
     }
 
     //Ejecuta el simulador en (N) pasos

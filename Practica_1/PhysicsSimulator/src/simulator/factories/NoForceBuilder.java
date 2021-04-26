@@ -8,7 +8,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 
 
     public NoForceBuilder() {
-    _typeTag="nf";
+    _typeTag="ng";
     _desc="No Force";
 
     }

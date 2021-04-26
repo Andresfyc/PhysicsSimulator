@@ -4,13 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-
-public class PhysicsSimulator {
+import simulator.model.SimulatorObserver;
+public class PhysicsSimulator implements SimulatorObserver{
 
     private ForceLaws _forceLaws; //ley de fuerza a aplicar
     private List<Body> listBody ; //cuerpos de la simulacion
     private double _dt; //incremento del tiempo
     private double _time; //numero de pasos que se ejecuta la simulacion
+    private List<SimulatorObserver> observer;
 
 
     public PhysicsSimulator(ForceLaws forceLaws, double dt) {
@@ -18,15 +19,17 @@ public class PhysicsSimulator {
         _time = 0.0;
         _dt=dt;
         this.listBody =new ArrayList<Body>();
+        this.observer= new ArrayList<SimulatorObserver>();
     }
 
-//Avance de los cuerpos
+
+    //Avance de los cuerpos
     public void advance() throws  IllegalArgumentException{
 
         //Se resetean todos los cuerpos
-        for(Body b:listBody){
+       /* for(Body b:listBody){
             b.resetForce();
-        }
+        }*/
 
         //Aplica las leyes de fuerza
        _forceLaws.apply(listBody);
@@ -38,12 +41,28 @@ public class PhysicsSimulator {
 
             //incrementa el tiempo actual en _dt segundos
        _time+=_dt;
+        for (SimulatorObserver ob:observer) {
+            ob.onAdvance(listBody,_time);
+        }
+
 
     }
+
+    public void reset(){
+        listBody.clear();
+        _time=0.0;
+        for (SimulatorObserver ob:observer) {
+            ob.onReset(listBody,_time,_dt,_forceLaws.toString());
+        }
+    }
+
     //agrega los cuerpos
     public void addBody(Body b) throws IllegalArgumentException {
         if (listBody.contains(b)) throw new IllegalArgumentException("this body already exists");
         listBody.add(b);
+        for (SimulatorObserver ob:observer) {
+            ob.onBodyAdded(listBody,b);
+        }
     }
 
 //estados de los cuerpos
@@ -63,14 +82,58 @@ public class PhysicsSimulator {
 
 //  añade o a la lista de observadores, si es que no está ya en ella.
     public void addObserver(SimulatorObserver o){
-
+        if (!observer.contains(o)) {
+            observer.add(o);
+            o.onRegister(listBody, _time,_dt,_forceLaws.toString());
+        }
     }
 
+    public void setForceLawsLaws(ForceLaws forceLaws)throws IllegalArgumentException {
+        this._forceLaws = forceLaws;
+        for (SimulatorObserver ob:observer) {
+            ob.onForceLawsChanged(_forceLaws.toString());
+        }
+    }
+
+    public void setDeltaTime(double dt)throws IllegalArgumentException {
+        this._dt = dt;
+        for (SimulatorObserver ob:observer) {
+            ob.onDeltaTimeChanged(_dt);
+        }
+    }
 
     public String toString() {
         return getState().toString();
     }
 
 
+    @Override
+    public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 
+    }
+
+    @Override
+    public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
+
+    }
+
+    @Override
+    public void onBodyAdded(List<Body> bodies, Body b) {
+
+    }
+
+    @Override
+    public void onAdvance(List<Body> bodies, double time) {
+
+    }
+
+    @Override
+    public void onDeltaTimeChanged(double dt) {
+
+    }
+
+    @Override
+    public void onForceLawsChanged(String fLawsDesc) {
+
+    }
 }
