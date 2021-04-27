@@ -36,6 +36,11 @@ public class Viewer extends JComponent implements SimulatorObserver {
         _showVectors = true;
         addKeyListener(new KeyListener() {
             @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyChar()) {
                     case '-':
@@ -61,13 +66,37 @@ public class Viewer extends JComponent implements SimulatorObserver {
                     default:
                 }
             }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
         });
 
         addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 requestFocus();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
     }
@@ -75,7 +104,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-// use 'gr' para dibujar, no 'g' --- da mejores resultados
+        // use 'gr' para dibujar, no 'g' --- da mejores resultados
         Graphics2D gr = (Graphics2D) g;
         gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -85,8 +114,28 @@ public class Viewer extends JComponent implements SimulatorObserver {
         _centerY = getHeight() / 2;
 
 // TODO dibuja una cruz en el centro
+        gr.setColor(Color.red);
+        gr.drawString("+",_centerX,_centerY);
 // TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
+        if(this._showVectors){
+            for (Body b:_bodies) {
+                gr.setColor(Color.blue);
+                double x = b.getPosition().getX();
+                double y = b.getPosition().getY();
+
+                gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+                gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+                gr.setColor(Color.black);
+                gr.drawString(b.getId(),_centerX+(int)(x/_scale),_centerY-(int)(y/_scale));
+            }
+        }
 // TODO dibujar ayuda si _showHelp es verdadero
+            if(this._showHelp){
+                gr.setColor(Color.red);
+                gr.drawString("h: toggle help, +: zoom-in -: zoom-out, =: fit",5,23);
+                gr.drawString("Scaling ratio "+ this._scale,5,35);
+
+            }
     }
 
     // otros métodos privados / protegidos
@@ -131,21 +180,31 @@ public class Viewer extends JComponent implements SimulatorObserver {
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 
+        this._bodies=bodies;
+        autoScale();
+        repaint();
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
 
+        this._bodies=bodies;
+        autoScale();
+        repaint();
     }
 
     @Override
     public void onBodyAdded(List<Body> bodies, Body b) {
 
+        this._bodies=bodies;
+        autoScale();
+        repaint();
     }
 
     @Override
     public void onAdvance(List<Body> bodies, double time) {
 
+        repaint();
     }
 
     @Override

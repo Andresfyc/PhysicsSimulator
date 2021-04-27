@@ -1,10 +1,6 @@
 package simulator.launcher;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.commons.cli.CommandLine;
@@ -31,7 +27,9 @@ import simulator.factories.NoForceBuilder;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
+import simulator.view.MainWindow;
 
+import javax.swing.*;
 
 
 public class Main {
@@ -52,6 +50,7 @@ public class Main {
 	private static String _expOutFile = null;
 	private static JSONObject _forceLawsInfo = null;
 	private static JSONObject _stateComparatorInfo = null;
+	private static String _mode="gui";
 
 	// factories
 	private static Factory<Body> _bodyFactory=null;
@@ -148,6 +147,12 @@ public class Main {
 		// eo
 		cmdLineOptions.addOption(Option.builder("eo").longOpt("expOutFile").hasArg().desc("expOutFile.").build());
 
+		// m
+
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Execution Mode. Possible values: ’batch’\n" +
+				"(Batch mode), ’gui’ (Graphical User\n" +
+				"Interface mode). Default value: ’batch’.").build());
+
 		// TODO add support for -o, -eo, and -s (add corresponding information to
 		// cmdLineOptions)
 
@@ -227,6 +232,15 @@ public class Main {
 
 
 	//nuevo
+	private static void parseModeOption(CommandLine line) throws ParseException {
+
+		if(line.hasOption("m")){
+			_mode= line.getOptionValue("m");
+		}
+	}
+
+
+
 	private static void parseDeltaTimeOption(CommandLine line) throws ParseException {
 		String dt = line.getOptionValue("dt", _dtimeDefaultValue.toString());
 		try {
@@ -300,7 +314,7 @@ public class Main {
 				System.out : new FileOutputStream(new File(_outFile));
 
 		PhysicsSimulator ps = new PhysicsSimulator(_forceLawsFactory.createInstance(_forceLawsInfo),_dtime);
-		Controller co = new Controller(ps, _bodyFactory);
+		Controller co = new Controller(ps, _bodyFactory,_forceLawsFactory);
 
 		InputStream expOut = null;
 
@@ -314,10 +328,32 @@ public class Main {
 		co.run(_steps, os, expOut, stateCmp);
 
 	}
+	private static void startGUIMode() throws Exception {
+
+		ForceLaws fLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
+		PhysicsSimulator pSim = new PhysicsSimulator(fLaws,_dtime);
+		Controller ctrl = new Controller(pSim,_bodyFactory,_forceLawsFactory);
+
+		if(_inFile != null){
+			InputStream input= new FileInputStream(new File(_inFile));
+			ctrl.loadBodies(input);
+		}
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				new MainWindow(ctrl);
+			}
+		});
+	}
+
 
 	private static void start(String[] args) throws Exception {
 		parseArgs(args);
-		startBatchMode();
+		if(_mode.equals("console")){
+			startBatchMode();
+		}else{
+			startGUIMode();
+		}
 	}
 
 	public static void main(String[] args) {

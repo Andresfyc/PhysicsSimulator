@@ -41,9 +41,11 @@ public class Controller {
     public void reset(){
        ps.reset();
     }
+
     public void SetDeltaTime(double dt){
         ps.setDeltaTime(dt);
     }
+
     public void addObserver(SimulatorObserver o){
         ps.addObserver(o);
     }
@@ -53,6 +55,11 @@ public class Controller {
     public void setForceLaws(JSONObject info){
         ForceLaws gr = this.fl.createInstance(info);
         ps.setForceLawsLaws(gr);
+    }
+    public void run(int n){
+        for (int i = 1; i <= n; i++) {
+            ps.advance();
+        }
     }
 
     //Ejecuta el simulador en (N) pasos
