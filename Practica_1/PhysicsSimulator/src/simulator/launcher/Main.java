@@ -1,6 +1,7 @@
 package simulator.launcher;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.apache.commons.cli.CommandLine;
@@ -34,8 +35,27 @@ import javax.swing.*;
 
 public class Main {
 
+	private enum ExecMode{
+		BATCH("batch", "Batch mode"), GUI("gui", "Graphical User Interface mode");
+
+		private String _modeTag;
+		private String _modeDesc;
+
+		private ExecMode(String modeTag, String modeDesc){
+			_modeTag=modeTag;
+			_modeDesc=modeDesc;
+		}
+
+		private String getModeTag(){
+			return _modeTag;
+		}
+		public String getModeDesc(){
+			return _modeDesc;
+		}
+	}
 	// default values for some parameters
 	//
+	private static ExecMode _defaultMode= ExecMode.BATCH;
 	private final static Double _dtimeDefaultValue = 2500.0;
 	private final static String _forceLawsDefaultValue = "nlug";
 	private final static String _stateComparatorDefaultValue = "epseq";
@@ -50,7 +70,6 @@ public class Main {
 	private static String _expOutFile = null;
 	private static JSONObject _forceLawsInfo = null;
 	private static JSONObject _stateComparatorInfo = null;
-	private static String _mode="gui";
 
 	// factories
 	private static Factory<Body> _bodyFactory=null;
@@ -82,7 +101,7 @@ public class Main {
 		_stateComparatorFactory = new BuilderBasedFactory<StateComparator>(stateBuilders);
 	}
 
-	private static void parseArgs(String[] args) {
+	private static void parseArgs(String[] args) throws Exception {
 
 		// define the valid command line options
 		//
@@ -106,6 +125,7 @@ public class Main {
 			parseOutFileOption(line);
 			parseStepsOption(line);
 			parseExpOutFileOption(line);
+			parseModeOption(line);
 
 
 
@@ -124,6 +144,8 @@ public class Main {
 		} catch (ParseException e) {
 			System.err.println(e.getLocalizedMessage());
 			System.exit(1);
+		}catch (InvocationTargetException e){
+			e.getCause().printStackTrace();
 		}
 
 	}
@@ -149,9 +171,9 @@ public class Main {
 
 		// m
 
-		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Execution Mode. Possible values: ’batch’\n" +
-				"(Batch mode), ’gui’ (Graphical User\n" +
-				"Interface mode). Default value: ’batch’.").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Execution Mode. Possible values: 'batch'\n" +
+				"(Batch mode), 'gui' (Graphical User\n" +
+				"Interface mode). Default value: 'batch'.").build());
 
 		// TODO add support for -o, -eo, and -s (add corresponding information to
 		// cmdLineOptions)
@@ -232,10 +254,27 @@ public class Main {
 
 
 	//nuevo
-	private static void parseModeOption(CommandLine line) throws ParseException {
-		if(line.hasOption("m")){
-			_mode= line.getOptionValue("m");
+	private static void parseModeOption(CommandLine line) throws Exception {
+
+		ExecMode batch=ExecMode.BATCH;
+		ExecMode gui=ExecMode.GUI;
+
+		if(line.getOptionValue("m")==null)
+			startBatchMode();
+		else{
+			if(line.getOptionValue("m").equals(batch.getModeTag())){
+				startBatchMode();
+			}else if(line.getOptionValue("m").equals(gui.getModeTag())){
+				startGUIMode();
+			}
+			if(!line.getOptionValue("m").equals(batch.getModeTag()) && !line.getOptionValue("m").equals(gui.getModeTag())) throw new ParseException("a mode is required");
 		}
+
+		/*
+		if(_defaultMode==null){
+			throw new ParseException("a mode is required");
+		}
+*/
 	}
 
 
@@ -327,7 +366,7 @@ public class Main {
 		co.run(_steps, os, expOut, stateCmp);
 
 	}
-	private static void startGUIMode() throws Exception {
+	private static void startGUIMode() throws FileNotFoundException, InvocationTargetException,InterruptedException {
 
 		ForceLaws fLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
 		PhysicsSimulator pSim = new PhysicsSimulator(fLaws,_dtime);
@@ -335,7 +374,12 @@ public class Main {
 
 		if(_inFile != null){
 			InputStream input= new FileInputStream(new File(_inFile));
-			ctrl.loadBodies(input);
+			try{
+
+		ctrl.loadBodies(input);
+			}catch (Exception e){
+				JOptionPane.showMessageDialog(null,e.getMessage());
+			}
 		}
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
@@ -348,11 +392,6 @@ public class Main {
 
 	private static void start(String[] args) throws Exception {
 		parseArgs(args);
-		if(_mode.equals("console")){
-			startBatchMode();
-		}else{
-			startGUIMode();
-		}
 	}
 
 	public static void main(String[] args) {

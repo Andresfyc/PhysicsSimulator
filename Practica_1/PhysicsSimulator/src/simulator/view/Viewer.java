@@ -120,8 +120,14 @@ public class Viewer extends JComponent implements SimulatorObserver {
         if(this._showVectors){
             for (Body b:_bodies) {
                 gr.setColor(Color.blue);
-                double x = b.getPosition().getX();
-                double y = b.getPosition().getY();
+                int x = _centerX + (int) (b.getPosition().getX() / _scale);
+                int y = _centerY -  (int) (b.getPosition().getY() / _scale);
+
+                int x2 = x + (int) b.getVelocity().getX();
+                int y2 = y - (int) b.getVelocity().getY();
+
+                int x1 = x + (int) b.getForce().getX();
+                int y1 = y - (int) b.getForce().getY();
 
                 gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
                 gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
@@ -152,7 +158,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
     }
 
 // Este método dibuja una línea desde (x1, y1) a (x2, y2) con una flecha.
-// La flecha es de alto hy ancho w.
+// La flecha es de alto y ancho w.
 // Los dos últimos argumentos son los colores de la flecha y la línea
 
     private void drawLineWithArrow(Graphics g, int x1, int y1, int x2, int y2, int w, int h, //
