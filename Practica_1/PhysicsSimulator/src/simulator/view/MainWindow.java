@@ -21,10 +21,12 @@ public class MainWindow extends JFrame {
     private void initGUI() {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
+        setContentPane(mainPanel);
+
         mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.PAGE_AXIS));
         this.setLocation(350,30);
         this.setPreferredSize(new Dimension(700,700));
-        setContentPane(mainPanel);
+
 
         this.cPanel = new ControlPanel(_ctrl);
         cPanel.setLayout(new FlowLayout());

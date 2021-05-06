@@ -52,10 +52,12 @@ public class Controller {
     public List<JSONObject> getForceLawsInfo(){
         return fl.getInfo();
     }
+
     public void setForceLaws(JSONObject info){
         ForceLaws gr = this.fl.createInstance(info);
         ps.setForceLawsLaws(gr);
     }
+
     public void run(int n){
         for (int i = 1; i <= n; i++) {
             ps.advance();

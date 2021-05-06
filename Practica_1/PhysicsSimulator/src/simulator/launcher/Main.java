@@ -233,7 +233,6 @@ public class Main {
 
 	//nuevo
 	private static void parseModeOption(CommandLine line) throws ParseException {
-
 		if(line.hasOption("m")){
 			_mode= line.getOptionValue("m");
 		}
@@ -359,6 +358,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			init();
+			//startGUIMode();
 			start(args);
 		} catch (Exception e) {
 			System.err.println("Something went wrong ...");

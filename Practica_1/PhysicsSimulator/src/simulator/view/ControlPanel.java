@@ -30,6 +30,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     ControlPanel(Controller ctrl) {
         _ctrl = ctrl;
         _stopped = true;
+        initGUI();
         _ctrl.addObserver(this);
 
         this.openButton = new JButton();
@@ -38,7 +39,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.stopButton = new JButton();
         this.runButton = new JButton();
 
-        initGUI();
+
     }
 
     private void initGUI() {
@@ -155,9 +156,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             try {
                 _ctrl.run(1);
             } catch (Exception e) {
-// TODO muestra el error en un cuadro de diálogo
+                // TODO muestra el error en un cuadro de diálogo
+                // TODO habilitar todos los botones
+
                 dialogError(e.getMessage());
-// TODO habilitar todos los botones
                 lawsButton.setEnabled(false);
                 openButton.setEnabled(false);
                 exitButton.setEnabled(false);
@@ -183,7 +185,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     }
 
     //Logica Botones
-
     private void uploadFiles(){
         this.fileC=new JFileChooser();
         int deVal = this.fileC.showOpenDialog(null);

@@ -39,8 +39,10 @@ public class PhysicsSimulator implements SimulatorObserver{
             b.move(_dt);
         }
 
-            //incrementa el tiempo actual en _dt segundos
+        //incrementa el tiempo actual en _dt segundos
        _time+=_dt;
+
+        // notificación onAdvance a todos los observadores.
         for (SimulatorObserver ob:observer) {
             ob.onAdvance(listBody,_time);
         }
@@ -49,6 +51,7 @@ public class PhysicsSimulator implements SimulatorObserver{
     }
 
     public void reset(){
+        //listBody.removeAll(listBody);
         listBody.clear();
         _time=0.0;
         for (SimulatorObserver ob:observer) {
@@ -56,16 +59,42 @@ public class PhysicsSimulator implements SimulatorObserver{
         }
     }
 
+    public void setDeltaTime(double dt)throws IllegalArgumentException {
+        this._dt = dt;
+
+        //notificación onDeltaTimeChanged a todos los observadores.
+        for (SimulatorObserver ob:observer) {
+            ob.onDeltaTimeChanged(_dt);
+        }
+    }
+
+    public void setForceLawsLaws(ForceLaws forceLaws)throws IllegalArgumentException {
+        this._forceLaws = forceLaws;
+
+        // notificación onForceLawsChanged a todos los observadores.
+        for (SimulatorObserver ob:observer) {
+            ob.onForceLawsChanged(_forceLaws.toString());
+        }
+    }
+
+    //  añade o a la lista de observadores, si es que no está ya en ella.
+    public void addObserver(SimulatorObserver o){
+        if (!observer.contains(o)) {
+            observer.add(o);
+            o.onRegister(listBody, _time,_dt,_forceLaws.toString());
+        }
+    }
+
     //agrega los cuerpos
     public void addBody(Body b) throws IllegalArgumentException {
-        if (listBody.contains(b)) throw new IllegalArgumentException("this body already exists");
+        if (listBody.contains(b)) throw new IllegalArgumentException("Este cuerpo ya existe");
         listBody.add(b);
         for (SimulatorObserver ob:observer) {
             ob.onBodyAdded(listBody,b);
         }
     }
 
-//estados de los cuerpos
+    //estados de los cuerpos
     public JSONObject getState() {
 
         JSONObject state = new JSONObject();
@@ -80,27 +109,8 @@ public class PhysicsSimulator implements SimulatorObserver{
         return state;
     }
 
-//  añade o a la lista de observadores, si es que no está ya en ella.
-    public void addObserver(SimulatorObserver o){
-        if (!observer.contains(o)) {
-            observer.add(o);
-            o.onRegister(listBody, _time,_dt,_forceLaws.toString());
-        }
-    }
 
-    public void setForceLawsLaws(ForceLaws forceLaws)throws IllegalArgumentException {
-        this._forceLaws = forceLaws;
-        for (SimulatorObserver ob:observer) {
-            ob.onForceLawsChanged(_forceLaws.toString());
-        }
-    }
 
-    public void setDeltaTime(double dt)throws IllegalArgumentException {
-        this._dt = dt;
-        for (SimulatorObserver ob:observer) {
-            ob.onDeltaTimeChanged(_dt);
-        }
-    }
 
     public String toString() {
         return getState().toString();

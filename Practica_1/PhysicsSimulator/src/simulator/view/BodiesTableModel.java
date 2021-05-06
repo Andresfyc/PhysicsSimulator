@@ -9,7 +9,6 @@ import java.util.List;
 
 public class BodiesTableModel extends AbstractTableModel implements SimulatorObserver {
 
-
     private List<Body> _bodies;
     static private final String[] columnNames={"id","Mass","Position","Velocity", "Force"};
     private String[] columnData;
@@ -19,8 +18,6 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
         ctrl.addObserver(this);
         this.columnData=new String[columnNames.length];
     }
-
-
 
     @Override
     public int getRowCount() {
