@@ -25,21 +25,20 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     JButton stopButton;
     JButton runButton;
 
-    private JFileChooser fileC;
+    private JFileChooser fc;
 
     ControlPanel(Controller ctrl) {
         _ctrl = ctrl;
         _stopped = true;
-        initGUI();
         _ctrl.addObserver(this);
-
         this.openButton = new JButton();
         this.lawsButton = new JButton();
         this.exitButton = new JButton();
         this.stopButton = new JButton();
         this.runButton = new JButton();
+        this.fc=null;
 
-
+        initGUI();
     }
 
     private void initGUI() {
@@ -57,7 +56,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 uploadFiles();
             }
         });
-
+        toolBar.add(openButton);
         //seleccionar ley de gravedad
 
         lawsButton.setToolTipText("Select the force laws");
@@ -69,8 +68,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 popUp();
             }
         });
+        toolBar.add(lawsButton);
 
-         stopButton.setToolTipText("Stop execution");
+        //parar
+        stopButton.setToolTipText("Stop execution");
         stopButton.setIcon(new ImageIcon(uploadImage("resources/icons/stop.png")));
         stopButton.setPreferredSize(new Dimension(36,36));
         stopButton.addActionListener(new ActionListener() {
@@ -79,17 +80,19 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 _stopped=true;
             }
         });
+        toolBar.add(stopButton);
 
+        //salir
         exitButton.setToolTipText("Exit");
         exitButton.setIcon(new ImageIcon(uploadImage("resources/icons/exit.png")));
         exitButton.setPreferredSize(new Dimension(36,36));
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                close();
+                quit();
             }
         });
-
+        toolBar.add(exitButton);
 
         //Steps
         this.steps = new JSpinner(new SpinnerNumberModel(5,0,10000,100));
@@ -97,7 +100,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.steps.setMaximumSize(new Dimension(70,70));
         this.steps.setMinimumSize(new Dimension(70,70));
         this.steps.setValue(0);
-
+        toolBar.add(new JLabel("Steps: "));
+        toolBar.add(this.steps);
 
         //time
 
@@ -106,6 +110,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
        this.time.setMaximumSize(new Dimension(70,70));
        this.time.setMinimumSize(new Dimension(70,70));
        this.time.setEditable(true);
+        toolBar.add(new JLabel("Time: "));
+        toolBar.add(this.time);
 
        // Descativar Botones
        runButton.setToolTipText("All buttons are disabled except Stop");
@@ -133,19 +139,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                }
            }
        });
-
-       //ADD
-
-        toolBar.add(openButton);
-        toolBar.add(lawsButton);
         toolBar.add(runButton);
-        toolBar.add(stopButton);
-        toolBar.add(new JLabel("Steps: "));
-        toolBar.add(this.steps);
-        toolBar.add(new JLabel("Time: "));
-        toolBar.add(this.time);
+
+
         toolBar.add(Box.createHorizontalStrut(270));
-        toolBar.add(exitButton);
         this.add(toolBar);
     }
 
@@ -186,16 +183,16 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     //Logica Botones
     private void uploadFiles(){
-        this.fileC=new JFileChooser();
-        int deVal = this.fileC.showOpenDialog(null);
+        this.fc=new JFileChooser();
+        int deVal = this.fc.showOpenDialog(null);
         if(deVal == JFileChooser.APPROVE_OPTION){
-            File file= this.fileC.getSelectedFile();
+            File file= this.fc.getSelectedFile();
             try{
-                InputStream input=new FileInputStream(file);
+                InputStream is=new FileInputStream(file);
                 _ctrl.reset();
-                _ctrl.loadBodies(input);
-            }catch (Exception ex){
-                dialogError("Error reading the file: "+ex.getMessage());
+                _ctrl.loadBodies(is);
+            }catch (Exception e){
+                dialogError("Error reading the file: "+e.getMessage());
             }
         }
     }
@@ -216,7 +213,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
         if (info==null){ info=forceLaws[0]; }
         if (info.charAt(0)=='N'){
-            if (info.charAt(1)==('A')){
+            if (info.charAt(1)==('o')){
                 pos=2;
             }
         }else{
@@ -229,7 +226,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-
+        _ctrl.SetDeltaTime(dt);
     }
 
     @Override
@@ -263,7 +260,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     public void dialogError(String string){
         JOptionPane.showMessageDialog(null,string);
     }
-    public void close(){
+    public void quit(){
         int msj= JOptionPane.showOptionDialog(new JFrame(),"Are sure you want to quit?", "Close", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,null, null, null);
         if(msj==0){
             System.exit(0);
