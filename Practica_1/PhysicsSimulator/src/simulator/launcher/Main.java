@@ -381,9 +381,11 @@ public class Main {
 				JOptionPane.showMessageDialog(null,e.getMessage());
 			}
 		}
+		System.out.println("1");
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("2");
 				new MainWindow(ctrl);
 			}
 		});

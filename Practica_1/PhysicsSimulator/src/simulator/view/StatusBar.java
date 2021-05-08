@@ -14,9 +14,9 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     private JLabel _numOfBodies; // for number of bodies
 
     StatusBar(Controller ctrl) {
-     this._currTime = new JLabel("Time: "+0);
-     this._numOfBodies = new JLabel("Bodies: "+0);
-     this._currLaws = new JLabel("Laws: "+ " ");
+    _currTime = new JLabel("Time: "+0);
+    _numOfBodies = new JLabel("Bodies: "+0);
+    _currLaws = new JLabel("Laws: "+ " ");
      initGUI();
         ctrl.addObserver(this);
     }
@@ -38,24 +38,24 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 // ...
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        this._numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
-        this._currTime.setText("Time: " +time);
+        _numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
+       _currTime.setText("Time: " +time);
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        this._numOfBodies.setText(String.valueOf(0));
-        this._numOfBodies.setText(String.valueOf("Time: "+time));
+        _numOfBodies.setText(String.valueOf(0));
+        _numOfBodies.setText(String.valueOf("Time: "+time));
     }
 
     @Override
     public void onBodyAdded(List<Body> bodies, Body b) {
-        this._numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
+        _numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
     }
 
     @Override
     public void onAdvance(List<Body> bodies, double time) {
-    this._currTime.setText("Time: "+String.valueOf(time));
+    _currTime.setText("Time: "+String.valueOf(time));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 
     @Override
     public void onForceLawsChanged(String fLawsDesc) {
-        this._currLaws.setText("Laws "+ fLawsDesc);
+        _currLaws.setText("Laws "+ fLawsDesc);
     }
 
 }

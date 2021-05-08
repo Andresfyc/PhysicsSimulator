@@ -43,6 +43,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     private void initGUI() {
 // TODO construya la barra de herramientas agregando botones, etc.
+        this.setSize(800,800);
         JToolBar toolBar = new JToolBar();
 
         //carga fichero
@@ -142,7 +143,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         toolBar.add(runButton);
 
 
-        toolBar.add(Box.createHorizontalStrut(270));
+        toolBar.add(Box.createHorizontalStrut(400));
         this.add(toolBar);
     }
 

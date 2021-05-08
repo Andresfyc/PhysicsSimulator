@@ -120,6 +120,12 @@ public class Viewer extends JComponent implements SimulatorObserver {
         if(this._showVectors){
             for (Body b:_bodies) {
                 gr.setColor(Color.blue);
+/*
+                double x= b.getPosition().getX();
+                double y=b.getPosition().getY();
+                */
+
+
                 int x = _centerX + (int) (b.getPosition().getX() / _scale);
                 int y = _centerY -  (int) (b.getPosition().getY() / _scale);
 
@@ -184,28 +190,32 @@ public class Viewer extends JComponent implements SimulatorObserver {
         g.setColor(arrowColor);
         g.fillPolygon(xpoints, ypoints, 3);
     }
-
+    private void update (List<Body> bodies){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                _bodies=bodies;
+                autoScale();
+                repaint();
+            }
+        });
+    }
 // SimulatorObserver methods
 
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        this._bodies=bodies;
-        autoScale();
-        repaint();
+       update(bodies);
+
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        this._bodies=bodies;
-        autoScale();
-        repaint();
+        update(bodies);
     }
 
     @Override
     public void onBodyAdded(List<Body> bodies, Body b) {
-        this._bodies=bodies;
-        autoScale();
-        repaint();
+        update(bodies);
     }
 
     @Override

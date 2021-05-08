@@ -3,6 +3,8 @@ package simulator.view;
 import simulator.control.Controller;
 import simulator.model.Body;
 import simulator.model.SimulatorObserver;
+
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +13,12 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 
     private List<Body> _bodies;
     static private final String[] columnNames={"id","Mass","Position","Velocity", "Force"};
-    private String[] columnData;
+
 
     BodiesTableModel(Controller ctrl) {
         _bodies = new ArrayList<>();
         ctrl.addObserver(this);
-        this.columnData=new String[columnNames.length];
+
     }
 
     @Override
@@ -31,43 +33,61 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 
     @Override
     public String getColumnName(int column) {
-        return columnNames[column].toString();
+        return columnNames[column];
     }
 
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        this.columnData[0]=_bodies.get(rowIndex).getId().toString();
-        this.columnData[1]= String.valueOf(_bodies.get(rowIndex).getMass());
-        this.columnData[2]= String.valueOf(_bodies.get(rowIndex).getPosition());
-        this.columnData[3]= String.valueOf(_bodies.get(rowIndex).getVelocity());
-        this.columnData[4]= String.valueOf(_bodies.get(rowIndex).getForce());
-        return this.columnData[columnIndex];
+
+        Body b =_bodies.get(rowIndex);
+        String s="";
+
+        switch (columnIndex){
+            case 0:
+                s=b.getId();
+                break;
+            case 1:
+                s=""+b.getMass();
+                break;
+            case 2:
+                s=b.getVelocity().toString();
+                break;
+            case 3:
+                s=b.getForce().toString();
+                break;
+        }
+        return s;
     }
 
+
+    private void update (List<Body> bodies){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                _bodies=bodies;
+                fireTableStructureChanged();
+            }
+        });
+    }
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-
-        _bodies=bodies;
-        fireTableStructureChanged();
+        update(bodies);
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
-    _bodies=bodies;
-    fireTableStructureChanged();
+        update(bodies);
     }
 
     @Override
     public void onBodyAdded(List<Body> bodies, Body b) {
-        _bodies=bodies;
-        fireTableStructureChanged();
+        update(bodies);
     }
 
     @Override
     public void onAdvance(List<Body> bodies, double time) {
-        _bodies=bodies;
-        fireTableStructureChanged();
+        update(bodies);
     }
 
     @Override
