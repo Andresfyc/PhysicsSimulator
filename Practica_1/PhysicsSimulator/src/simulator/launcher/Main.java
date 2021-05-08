@@ -371,7 +371,7 @@ public class Main {
 		ForceLaws fLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
 		PhysicsSimulator pSim = new PhysicsSimulator(fLaws,_dtime);
 		Controller ctrl = new Controller(pSim,_bodyFactory,_forceLawsFactory);
-
+/*
 		if(_inFile != null){
 			InputStream input= new FileInputStream(new File(_inFile));
 			try{
@@ -381,11 +381,10 @@ public class Main {
 				JOptionPane.showMessageDialog(null,e.getMessage());
 			}
 		}
-		System.out.println("1");
+		*/
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("2");
 				new MainWindow(ctrl);
 			}
 		});

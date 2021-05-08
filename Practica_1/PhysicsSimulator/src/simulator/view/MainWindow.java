@@ -19,8 +19,6 @@ public class MainWindow extends JFrame {
 // TODO complete this method to build the GUI
 // ...
 
-        this.setSize(800,800);
-        this.setVisible(true);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
@@ -37,16 +35,21 @@ public class MainWindow extends JFrame {
 
         mainPanel.add(ctrlPanel,BorderLayout.PAGE_START);
         mainPanel.add(statusBar,BorderLayout.PAGE_END);
+
+
         bodiesInfo.setPreferredSize(new Dimension(800,300));
         contentPanel.add(bodiesInfo);
 
-        universeViewer.setPreferredSize(new Dimension(800,300));
+        universeViewer.setPreferredSize(new Dimension(800,600));
         contentPanel.add(new JScrollPane(universeViewer, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
         statusBar.setPreferredSize(new Dimension(800,30));
         contentPanel.add(statusBar);
 
 
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        pack();
+        setVisible(true);
 
     }
 // other private/protected methods

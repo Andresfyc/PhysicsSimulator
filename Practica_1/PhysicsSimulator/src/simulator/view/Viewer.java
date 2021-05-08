@@ -6,6 +6,7 @@ import simulator.model.Body;
 import simulator.model.SimulatorObserver;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,6 +30,11 @@ public class Viewer extends JComponent implements SimulatorObserver {
     }
 
     private void initGUI() {
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.black, 2),
+                "Viewer",
+                TitledBorder.LEFT, TitledBorder.TOP));
 // TODO add border with title
         _bodies = new ArrayList<>();
         _scale = 1.0;
@@ -120,10 +126,10 @@ public class Viewer extends JComponent implements SimulatorObserver {
         if(this._showVectors){
             for (Body b:_bodies) {
                 gr.setColor(Color.blue);
-/*
-                double x= b.getPosition().getX();
-                double y=b.getPosition().getY();
-                */
+
+                //double x= b.getPosition().getX();
+                //double y=b.getPosition().getY();
+
 
 
                 int x = _centerX + (int) (b.getPosition().getX() / _scale);
@@ -135,16 +141,20 @@ public class Viewer extends JComponent implements SimulatorObserver {
                 int x1 = x + (int) b.getForce().getX();
                 int y1 = y - (int) b.getForce().getY();
 
-                gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
-                gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+
+                gr.drawOval(x,y,8,8);
+                gr.fillOval(x,y,8,8);
+                //gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+                //gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
                 gr.setColor(Color.black);
-                gr.drawString(b.getId(),_centerX+(int)(x/_scale),_centerY-(int)(y/_scale));
+                gr.drawString(b.getId(),x,y);
+                //drawLineWithArrow(gr,x1,y1,x2,y2,0,0,Color.GREEN,Color.RED);
             }
         }
 // TODO dibujar ayuda si _showHelp es verdadero
             if(this._showHelp){
                 gr.setColor(Color.red);
-                gr.drawString("h: toggle help, +: zoom-in -: zoom-out, =: fit",5,23);
+                gr.drawString("h: toggle help, v: toogle vectors, +: zoom-in -: zoom-out, =: fit",5,23);
                 gr.drawString("Scaling ratio "+ this._scale,5,35);
 
             }

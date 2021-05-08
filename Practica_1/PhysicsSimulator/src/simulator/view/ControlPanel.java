@@ -46,6 +46,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.setSize(800,800);
         JToolBar toolBar = new JToolBar();
 
+
         //carga fichero
 
         openButton.setToolTipText("Load an event file");
@@ -57,7 +58,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 uploadFiles();
             }
         });
-        toolBar.add(openButton);
+
         //seleccionar ley de gravedad
 
         lawsButton.setToolTipText("Select the force laws");
@@ -69,7 +70,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 popUp();
             }
         });
-        toolBar.add(lawsButton);
+
 
         //parar
         stopButton.setToolTipText("Stop execution");
@@ -81,7 +82,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 _stopped=true;
             }
         });
-        toolBar.add(stopButton);
+
 
         //salir
         exitButton.setToolTipText("Exit");
@@ -93,7 +94,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                 quit();
             }
         });
-        toolBar.add(exitButton);
+
 
         //Steps
         this.steps = new JSpinner(new SpinnerNumberModel(5,0,10000,100));
@@ -101,8 +102,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.steps.setMaximumSize(new Dimension(70,70));
         this.steps.setMinimumSize(new Dimension(70,70));
         this.steps.setValue(0);
-        toolBar.add(new JLabel("Steps: "));
-        toolBar.add(this.steps);
+
+
 
         //time
 
@@ -111,8 +112,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
        this.time.setMaximumSize(new Dimension(70,70));
        this.time.setMinimumSize(new Dimension(70,70));
        this.time.setEditable(true);
-        toolBar.add(new JLabel("Time: "));
-        toolBar.add(this.time);
+
+
 
        // Descativar Botones
        runButton.setToolTipText("All buttons are disabled except Stop");
@@ -140,10 +141,25 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
                }
            }
        });
+
+
+
+
+        toolBar.add(openButton);
+        toolBar.addSeparator();
+        toolBar.add(lawsButton);
+        toolBar.addSeparator();
         toolBar.add(runButton);
-
-
-        toolBar.add(Box.createHorizontalStrut(400));
+        toolBar.add(stopButton);
+        toolBar.addSeparator();
+        toolBar.add(new JLabel("Steps: "));
+        toolBar.add(steps);
+        toolBar.addSeparator();
+        toolBar.add(new JLabel("Delta-Time: "));
+        toolBar.add(time);
+        toolBar.addSeparator(new Dimension(300,10));
+        toolBar.add(exitButton);
+       // toolBar.add(Box.createHorizontalStrut(300));
         this.add(toolBar);
     }
 
@@ -187,6 +203,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.fc=new JFileChooser();
         int deVal = this.fc.showOpenDialog(null);
         if(deVal == JFileChooser.APPROVE_OPTION){
+           // this.fc.setCurrentDirectory(new File("resources/examples/"));
             File file= this.fc.getSelectedFile();
             try{
                 InputStream is=new FileInputStream(file);
@@ -195,6 +212,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             }catch (Exception e){
                 dialogError("Error reading the file: "+e.getMessage());
             }
+        }else{
+            System.out.println("Load cancelled by user");//pendiente
         }
     }
 

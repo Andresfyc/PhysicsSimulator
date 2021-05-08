@@ -4,6 +4,7 @@ import simulator.control.Controller;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class BodiesTable  extends JPanel {
@@ -15,12 +16,10 @@ public class BodiesTable  extends JPanel {
                 TitledBorder.LEFT, TitledBorder.TOP));
 // TODO completo
 
-
        BodiesTableModel bTable = new BodiesTableModel(ctrl);
-
         JTable jt = new JTable(bTable);
-        JScrollPane scroll = new JScrollPane();
-        scroll.add(jt);
+        JScrollPane scroll = new JScrollPane(jt,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+       this.add(scroll);
 
     }
 }

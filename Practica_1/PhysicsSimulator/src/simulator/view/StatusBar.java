@@ -38,24 +38,24 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 // ...
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        _numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
+        _numOfBodies.setText("Bodies: "+ bodies.size());
        _currTime.setText("Time: " +time);
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
         _numOfBodies.setText(String.valueOf(0));
-        _numOfBodies.setText(String.valueOf("Time: "+time));
+        _numOfBodies.setText("Time: " + time);
     }
 
     @Override
     public void onBodyAdded(List<Body> bodies, Body b) {
-        _numOfBodies.setText("Bodies: "+String.valueOf(bodies.size()));
+        _numOfBodies.setText("Bodies: "+ bodies.size());
     }
 
     @Override
     public void onAdvance(List<Body> bodies, double time) {
-    _currTime.setText("Time: "+String.valueOf(time));
+    _currTime.setText("Time: "+ time);
     }
 
     @Override
