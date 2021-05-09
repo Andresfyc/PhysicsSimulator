@@ -67,7 +67,9 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         lawsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                popUp();
+                ForceLawsDialog fcl= new ForceLawsDialog(_ctrl.getForceLawsInfo());
+                fcl.setVisible(true);
+
             }
         });
 
