@@ -121,6 +121,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
 // TODO dibuja una cruz en el centro
         gr.setColor(Color.red);
+        gr.setFont(new Font("Dialog", Font.PLAIN, 18));
         gr.drawString("+",_centerX,_centerY);
 // TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
         if(this._showVectors){
@@ -133,7 +134,12 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
 
                 int x = _centerX + (int) (b.getPosition().getX() / _scale);
-                int y = _centerY -  (int) (b.getPosition().getY() / _scale);
+                int y = _centerY - (int) (b.getPosition().getY() / _scale);
+
+                gr.setColor(Color.black);
+                gr.drawString(b.getId(),x,y);
+                drawLineWithArrow(gr,x,y,x,y,0,0,Color.GREEN,Color.RED);
+
 
                 int x2 = x + (int) b.getVelocity().getX();
                 int y2 = y - (int) b.getVelocity().getY();
@@ -144,19 +150,18 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
                 gr.drawOval(x,y,8,8);
                 gr.fillOval(x,y,8,8);
-                //gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
-                //gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+//                gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
+//                gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
                 gr.setColor(Color.black);
                 gr.drawString(b.getId(),x,y);
-                //drawLineWithArrow(gr,x1,y1,x2,y2,0,0,Color.GREEN,Color.RED);
+                drawLineWithArrow(gr,x1,y1,x2,y2,0,0,Color.GREEN,Color.RED);
             }
         }
 // TODO dibujar ayuda si _showHelp es verdadero
             if(this._showHelp){
                 gr.setColor(Color.red);
-                gr.drawString("h: toggle help, v: toogle vectors, +: zoom-in -: zoom-out, =: fit",5,23);
-                gr.drawString("Scaling ratio "+ this._scale,5,35);
-
+                gr.drawString("h: toggle help, v: toogle vectors, +: zoom-in -: zoom-out, =: fit",5,30);
+                gr.drawString("Scaling ratio "+ this._scale,5,50);
             }
     }
 
@@ -215,7 +220,6 @@ public class Viewer extends JComponent implements SimulatorObserver {
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
        update(bodies);
-
     }
 
     @Override

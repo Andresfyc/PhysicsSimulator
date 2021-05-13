@@ -43,8 +43,11 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     private void initGUI() {
 // TODO construya la barra de herramientas agregando botones, etc.
-        this.setSize(800,800);
+
         JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false); //impide que se pueda mover de sitio.
+
+
 
 
         //carga fichero
@@ -205,7 +208,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         this.fc=new JFileChooser();
         int deVal = this.fc.showOpenDialog(null);
         if(deVal == JFileChooser.APPROVE_OPTION){
-           // this.fc.setCurrentDirectory(new File("resources/examples/"));
+            this.fc.setCurrentDirectory(new File("."));
             File file= this.fc.getSelectedFile();
             try{
                 InputStream is=new FileInputStream(file);

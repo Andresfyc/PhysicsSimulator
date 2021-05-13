@@ -16,10 +16,12 @@ public class BodiesTable  extends JPanel {
                 TitledBorder.LEFT, TitledBorder.TOP));
 // TODO completo
 
-       BodiesTableModel bTable = new BodiesTableModel(ctrl);
+        BodiesTableModel bTable = new BodiesTableModel(ctrl);
         JTable jt = new JTable(bTable);
         JScrollPane scroll = new JScrollPane(jt,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       this.add(scroll);
+        this.add(scroll);
+
+
 
     }
 }
