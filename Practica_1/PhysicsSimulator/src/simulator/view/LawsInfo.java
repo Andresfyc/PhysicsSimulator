@@ -8,10 +8,10 @@ public class LawsInfo {
     private String _value;
     private String _description;
 
-    public LawsInfo(String _key, String _value, String _description) {
-        this._key = _key;
-        this._value = _value;
-        this._description = _description;
+    public LawsInfo(String key, String value, String description) {
+        this._key = key;
+        this._value = value;
+        this._description = description;
     }
 
     public String get_key() {

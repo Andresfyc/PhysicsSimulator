@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    // ...
+
     Controller _ctrl;
 
     public MainWindow(Controller ctrl) {
@@ -16,9 +16,6 @@ public class MainWindow extends JFrame {
     }
 
     private void initGUI() {
-// TODO complete this method to build the GUI
-// ...
-
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);

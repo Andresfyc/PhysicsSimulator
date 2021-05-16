@@ -24,7 +24,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     JButton exitButton;
     JButton stopButton;
     JButton runButton;
-
+    ForceLawsDialog fcl;
     private JFileChooser fc;
 
     ControlPanel(Controller ctrl) {
@@ -47,9 +47,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false); //impide que se pueda mover de sitio.
 
-
-
-
         //carga fichero
 
         openButton.setToolTipText("Load an event file");
@@ -68,10 +65,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         lawsButton.setIcon(new ImageIcon(uploadImage("resources/icons/physics.png")));
         lawsButton.setPreferredSize(new Dimension(36,36));
         lawsButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                ForceLawsDialog fcl= new ForceLawsDialog(_ctrl.getForceLawsInfo());
-                fcl.setVisible(true);
+               selectLaws();
 
             }
         });
@@ -222,30 +219,22 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         }
     }
 
-    private void popUp(){
-        List<JSONObject> lis= _ctrl.getForceLawsInfo();
-        String[] forceLaws = new String[lis.size()];
-        JSONObject[] opt = new JSONObject[lis.size()];
-        int pos=0;
-
-        for(int i =0; i<lis.size();i++){
-            forceLaws[i]= lis.get(i).getString("desc") + " ("+lis.get(i).getString("type")+")";
-            opt[i]=lis.get(i);
+    public void selectLaws(){
+        if (fcl == null){
+            fcl = new ForceLawsDialog((Frame)SwingUtilities.getWindowAncestor(this),_ctrl.getForceLawsInfo());
         }
-
-        JFrame jf = new JFrame();
-        String info= (String) JOptionPane.showInputDialog(jf,"Select Force laws to be used","Force laws Selector",JOptionPane.QUESTION_MESSAGE,null,forceLaws,forceLaws[0]);
-
-        if (info==null){ info=forceLaws[0]; }
-        if (info.charAt(0)=='N'){
-            if (info.charAt(1)==('o')){
-                pos=2;
+        int status = fcl.open();
+        if (status == 1){
+            try {
+                JSONObject law = fcl.getLaws();
+                _ctrl.setForceLaws(law);
             }
-        }else{
-            pos=1;
+            catch (Exception e){
+                JOptionPane.showMessageDialog(this.getParent(),"Algo ha salido mal: " + e.getLocalizedMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
         }
-        _ctrl.setForceLaws(opt[pos]);
     }
+
 
     // métodos SimulatorObserver
 
