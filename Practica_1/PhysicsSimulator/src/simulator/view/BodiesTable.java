@@ -20,6 +20,7 @@ public class BodiesTable  extends JPanel {
         JTable jt = new JTable(bTable);
         JScrollPane scroll = new JScrollPane(jt,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
+        setOpaque(true);
 
     }
 }

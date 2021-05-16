@@ -1,5 +1,6 @@
 package simulator.view;
 
+import org.omg.PortableServer._ServantActivatorStub;
 import simulator.control.Controller;
 import simulator.misc.Vector2D;
 import simulator.model.Body;
@@ -124,37 +125,32 @@ public class Viewer extends JComponent implements SimulatorObserver {
         gr.setFont(new Font("Dialog", Font.PLAIN, 18));
         gr.drawString("+",_centerX,_centerY);
 // TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
-        if(this._showVectors){
+
             for (Body b:_bodies) {
-                gr.setColor(Color.blue);
 
-                //double x= b.getPosition().getX();
-                //double y=b.getPosition().getY();
+                double x= b.getPosition().getX();
+                double y= b.getPosition().getY();
 
+                if(this._showVectors){
 
+                    int x3=  (_centerX + (int) (x/_scale))+5;
+                    int y3 =  (_centerY - (int) (y/_scale))+5;
 
-                int x = _centerX + (int) (b.getPosition().getX() / _scale);
-                int y = _centerY - (int) (b.getPosition().getY() / _scale);
-
-                gr.setColor(Color.black);
-                gr.drawString(b.getId(),x,y);
-                drawLineWithArrow(gr,x,y,x,y,0,0,Color.GREEN,Color.RED);
-
-
-                int x2 = x + (int) b.getVelocity().getX();
-                int y2 = y - (int) b.getVelocity().getY();
-
-                int x1 = x + (int) b.getForce().getX();
-                int y1 = y - (int) b.getForce().getY();
+                    int x2 = (int) (x3 +  b.getVelocity().direction().getX()*20);
+                    int y2 = (int) (y3 -  b.getVelocity().direction().getY()*20);
+                    drawLineWithArrow(gr,x3,y3,x2,y2,4,3,Color.GREEN,Color.GREEN);
 
 
-                gr.drawOval(x,y,8,8);
-                gr.fillOval(x,y,8,8);
-//                gr.drawOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
-//                gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),8,8);
-                gr.setColor(Color.black);
-                gr.drawString(b.getId(),x,y);
-                drawLineWithArrow(gr,x1,y1,x2,y2,0,0,Color.GREEN,Color.RED);
+                    int x1 = (int) (x3 +  b.getForce().direction().getX()*20);
+                    int y1 = (int) (y3 -  b.getForce().direction().getY()*20);
+                    drawLineWithArrow(gr,x3,y3,x1,y1,4,3,Color.RED,Color.RED);
+
+
+                    gr.setColor(Color.black);
+                    gr.drawString(b.getId(),_centerX+(int)(x/ _scale),(_centerY-(int)(y/_scale))-5);
+                    gr.setColor(Color.BLUE);
+                    gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),5,5);
+
             }
         }
 // TODO dibujar ayuda si _showHelp es verdadero

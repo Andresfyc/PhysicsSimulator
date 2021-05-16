@@ -21,19 +21,18 @@ public class ForceLawsDialog extends JDialog {
         super(parent, true);
         this.setTitle("Force Laws Selection");
         _status = 0;
-        initGUI(forceLawsInfo);
+        _forceLawsInfo=forceLawsInfo;
+        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        initGUI();
     }
-
-
 
 
     //************************* LAWS DIALOG  ***************************************//
 
 
-    public void initGUI(List<JSONObject> forceLawsInfo) {
+    public void initGUI() {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-
         JPanel southPanel = new JPanel();
         JPanel panelBotones = new JPanel(new FlowLayout());
 
@@ -42,38 +41,36 @@ public class ForceLawsDialog extends JDialog {
                 "<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
         this.add(help, BorderLayout.NORTH);
 
-
+        JPanel panelCenter= new JPanel();
         fTable = new LawsTableModel();
         JTable jtF = new JTable(fTable);
         JScrollPane scrollD = new JScrollPane(jtF, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.add(scrollD);
-
+        panelCenter.add(scrollD);
         mainPanel.add(scrollD);
         BoxLayout layout  = new BoxLayout(mainPanel,BoxLayout.Y_AXIS);
         mainPanel.setLayout(layout);
 
-
         this.comboBox = new JComboBox<String>();
-        for (JSONObject s: forceLawsInfo ) {
-            this.comboBox.addItem(s.getString("desc"));
-        }
+       for (JSONObject s: _forceLawsInfo ) {
+           this.comboBox.addItem(s.getString("desc"));
+       }
+       _selectedLawsIndex=0;
+       comboBox.setSelectedIndex(_selectedLawsIndex);
 
-        this.comboBox.addActionListener(new ActionListener() {
+       JSONObject data=_forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+       fTable.updateTable(data);
+
+        comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index = comboBox.getSelectedIndex();
-                fTable.addElement(_forceLawsInfo.get(index).toString(), _forceLawsInfo.get(index).toString());
+                _selectedLawsIndex = comboBox.getSelectedIndex();
+                JSONObject data=_forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+                fTable.updateTable(data);
             }
         });
 
         southPanel.add(new JLabel("Force Law : "));
         southPanel.add(this.comboBox);
-
-//        area = new JTextArea(15,15);
-//        area.setEditable(false);
-//        JScrollPane scroll = new JScrollPane(area);
-//        this.add(scroll);
-
         mainPanel.add(southPanel);
 
         JButton cancel = new JButton("Cancel");
@@ -102,8 +99,6 @@ public class ForceLawsDialog extends JDialog {
         });
 
 
-
-
         panelBotones.add(ok);
 
         mainPanel.add(panelBotones,BorderLayout.SOUTH);
@@ -112,12 +107,8 @@ public class ForceLawsDialog extends JDialog {
         setMinimumSize(new Dimension(600,500));
         this.setLocationRelativeTo(null);
         this.add(mainPanel);
-        //this.setVisible(false);
-//        this.pack();
+
     }
-
-
-
 
     public int open() {
         pack();

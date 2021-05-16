@@ -24,6 +24,9 @@ public class LawsTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
+    public void clear(){
+        _forceLaws.clear();
+    }
     @Override
     public int getRowCount() {
         return _forceLaws.size();
@@ -81,6 +84,7 @@ public class LawsTableModel extends AbstractTableModel {
         }
         return s;
     }
+
 
 
 

@@ -48,12 +48,15 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
                 s=b.getId();
                 break;
             case 1:
-                s=""+b.getMass();
+                s=" "+b.getMass();
                 break;
             case 2:
-                s=b.getVelocity().toString();
+                s=b.getPosition().toString();
                 break;
             case 3:
+                s=b.getVelocity().toString();
+                break;
+            case 4:
                 s=b.getForce().toString();
                 break;
         }
