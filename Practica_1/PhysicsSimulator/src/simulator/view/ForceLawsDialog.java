@@ -16,12 +16,13 @@ public class ForceLawsDialog extends JDialog {
     private List<JSONObject> _forceLawsInfo;
     public int _selectedLawsIndex;
     private LawsTableModel fTable;
+    private JSONObject data;
 
     public ForceLawsDialog(Frame parent, List<JSONObject> forceLawsInfo) {
         super(parent, true);
         this.setTitle("Force Laws Selection");
         _status = 0;
-        _forceLawsInfo=forceLawsInfo;
+        _forceLawsInfo = forceLawsInfo;
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         initGUI();
     }
@@ -41,30 +42,33 @@ public class ForceLawsDialog extends JDialog {
                 "<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
         this.add(help, BorderLayout.NORTH);
 
-        JPanel panelCenter= new JPanel();
+
         fTable = new LawsTableModel();
         JTable jtF = new JTable(fTable);
         JScrollPane scrollD = new JScrollPane(jtF, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panelCenter.add(scrollD);
+
         mainPanel.add(scrollD);
-        BoxLayout layout  = new BoxLayout(mainPanel,BoxLayout.Y_AXIS);
+        BoxLayout layout = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
         mainPanel.setLayout(layout);
 
-        this.comboBox = new JComboBox<String>();
-       for (JSONObject s: _forceLawsInfo ) {
-           this.comboBox.addItem(s.getString("desc"));
-       }
-       _selectedLawsIndex=0;
-       comboBox.setSelectedIndex(_selectedLawsIndex);
+        /************************** ComboBox ******************************/
 
-       JSONObject data=_forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
-       fTable.updateTable(data);
+        this.comboBox = new JComboBox<String>();
+
+        for (JSONObject s : _forceLawsInfo) {
+            this.comboBox.addItem(s.getString("desc"));
+        }
+
+//        _selectedLawsIndex = 0;
+//        comboBox.setSelectedIndex(_selectedLawsIndex);
+//        JSONObject data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+//        fTable.updateTable(data);
 
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _selectedLawsIndex = comboBox.getSelectedIndex();
-                JSONObject data=_forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+                data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
                 fTable.updateTable(data);
             }
         });
@@ -73,12 +77,14 @@ public class ForceLawsDialog extends JDialog {
         southPanel.add(this.comboBox);
         mainPanel.add(southPanel);
 
+        /************************ Botones **************************/
+
         JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(new ActionListener(){
+        cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                _status=0;
-                ForceLawsDialog.this.setVisible(true);
+                _status = 0;
+                ForceLawsDialog.this.setVisible(false);
             }
 
         });
@@ -86,11 +92,11 @@ public class ForceLawsDialog extends JDialog {
         panelBotones.add(cancel);
 
         JButton ok = new JButton("OK");
-        ok.addActionListener(new ActionListener(){
+        ok.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e ) {
-                if (comboBox.getSelectedItem() != null){
-                    _status=1;
+            public void actionPerformed(ActionEvent e) {
+                if (comboBox.getSelectedItem() != null) {
+                    _status = 1;
                     ForceLawsDialog.this.setVisible(false);
                 }
 
@@ -101,17 +107,17 @@ public class ForceLawsDialog extends JDialog {
 
         panelBotones.add(ok);
 
-        mainPanel.add(panelBotones,BorderLayout.SOUTH);
+        mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
 
-        setMinimumSize(new Dimension(600,500));
+        setMinimumSize(new Dimension(600, 500));
         this.setLocationRelativeTo(null);
         this.add(mainPanel);
 
     }
 
     public int open() {
-        pack();
+        //pack();
         setVisible(true);
         return _status;
     }
@@ -121,8 +127,8 @@ public class ForceLawsDialog extends JDialog {
         return fTable.toString();
     }
 
-    public JSONObject getLaws() {
-        return null;
+    public JSONObject getData() {
+        return data;
     }
 }
 

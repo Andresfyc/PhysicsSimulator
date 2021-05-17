@@ -18,10 +18,6 @@ public class LawsInfo {
         return _key;
     }
 
-    public void set_key(String _key) {
-        this._key = _key;
-    }
-
     public String get_value() {
         return _value;
     }
