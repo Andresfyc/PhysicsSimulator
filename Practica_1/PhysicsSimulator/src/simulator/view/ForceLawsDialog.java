@@ -110,7 +110,7 @@ public class ForceLawsDialog extends JDialog {
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
 
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         this.setLocationRelativeTo(null);
         this.add(mainPanel);
 

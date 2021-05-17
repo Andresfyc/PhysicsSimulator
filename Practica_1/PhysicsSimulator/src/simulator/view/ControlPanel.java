@@ -99,11 +99,11 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
 
         //Steps
-        this.steps = new JSpinner(new SpinnerNumberModel(5,0,10000,100));
+        this.steps = new JSpinner(new SpinnerNumberModel(9000,1,10000,100));
         this.steps.setToolTipText("Steps to execute: 1-10000");
-        this.steps.setMaximumSize(new Dimension(70,70));
-        this.steps.setMinimumSize(new Dimension(70,70));
-        this.steps.setValue(0);
+        this.steps.setMaximumSize(new Dimension(80,40));
+        this.steps.setMinimumSize(new Dimension(80,40));
+        this.steps.setValue(9000);
 
 
 
@@ -220,6 +220,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     }
 
     public void selectLaws(){
+
         if (fcl == null){
             fcl = new ForceLawsDialog((Frame)SwingUtilities.getWindowAncestor(this),_ctrl.getForceLawsInfo());
         }
