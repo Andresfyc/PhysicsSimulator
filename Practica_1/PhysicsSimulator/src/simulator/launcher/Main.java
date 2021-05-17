@@ -127,9 +127,6 @@ public class Main {
 			parseExpOutFileOption(line);
 			parseModeOption(line);
 
-
-
-
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
 			//
@@ -309,6 +306,7 @@ public class Main {
 		}
 
 		// look if the type is supported by the factory
+		// mira si el tipo es compatible con la fábrica
 		boolean found = false;
 		for (JSONObject fe : factory.getInfo()) {
 			if (type.equals(fe.getString("type"))) {
@@ -318,6 +316,7 @@ public class Main {
 		}
 
 		// build a corresponding JSON for that data, if found
+		// construir un JSON correspondiente para esos datos, si se encuentra
 		JSONObject jo = null;
 		if (found) {
 			jo = new JSONObject();

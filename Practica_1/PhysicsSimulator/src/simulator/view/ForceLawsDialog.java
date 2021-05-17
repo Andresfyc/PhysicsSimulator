@@ -110,7 +110,7 @@ public class ForceLawsDialog extends JDialog {
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
 
-        setMinimumSize(new Dimension(600, 500));
+        setMinimumSize(new Dimension(600, 300));
         this.setLocationRelativeTo(null);
         this.add(mainPanel);
 
@@ -128,6 +128,11 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
+        String key = (String) fTable.getValueAt(_selectedLawsIndex,0);
+        String value = (String) fTable.getValueAt(_selectedLawsIndex,1);
+        String datos = "{" + key + ":" + value + "}";
+        data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
+        data.put("data", new JSONObject(datos));
         return data;
     }
 }

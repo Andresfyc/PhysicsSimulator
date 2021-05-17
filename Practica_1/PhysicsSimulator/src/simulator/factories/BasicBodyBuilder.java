@@ -22,7 +22,6 @@ public class BasicBodyBuilder extends Builder<Body>{
         Vector2D v=new Vector2D(vector.getDouble(0),vector.getDouble(1));
         double m=data.getDouble("m");
 
-
         return new Body(id,v,p,m);
     }
 

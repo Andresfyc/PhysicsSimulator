@@ -10,7 +10,6 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
     public NewtonUniversalGravitationBuilder() {
        _typeTag="nlug";
        _desc="Newton's law of Universal Gravitation";
-
     }
 
 
@@ -23,7 +22,6 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 
     @Override
     public JSONObject createData() {
-
         JSONObject data= new JSONObject();
         data.put("G","The gravitational constant (a number)");
         return data;
