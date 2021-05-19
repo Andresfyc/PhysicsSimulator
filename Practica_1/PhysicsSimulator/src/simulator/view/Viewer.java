@@ -133,18 +133,18 @@ public class Viewer extends JComponent implements SimulatorObserver {
                     int x3=  (_centerX + (int) (x/_scale))+5;
                     int y3 =  (_centerY - (int) (y/_scale))+5;
 
-                    int x2 = (int) (x3 +  b.getVelocity().direction().getX()*20);
-                    int y2 = (int) (y3 -  b.getVelocity().direction().getY()*20);
+                    int x2 = (int) (x3 +  b.getVelocity().direction().getX()*30);
+                    int y2 = (int) (y3 -  b.getVelocity().direction().getY()*30);
                     drawLineWithArrow(gr,x3,y3,x2,y2,4,3,Color.GREEN,Color.GREEN);
 
-                    int x1 = (int) (x3 +  b.getForce().direction().getX()*20);
-                    int y1 = (int) (y3 -  b.getForce().direction().getY()*20);
+                    int x1 = (int) (x3 +  b.getForce().direction().getX()*40);
+                    int y1 = (int) (y3 -  b.getForce().direction().getY()*40);
                     drawLineWithArrow(gr,x3,y3,x1,y1,4,3,Color.RED,Color.RED);
 
                     gr.setColor(Color.black);
-                    gr.drawString(b.getId(),_centerX+(int)(x/ _scale),(_centerY-(int)(y/_scale))-5);
+                    gr.drawString(b.getId(),_centerX+(int)(x/ _scale),(_centerY-(int)(y/_scale))-20);
                     gr.setColor(Color.BLUE);
-                    gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),5,5);
+                    gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),10,10);
 
             }
         }
