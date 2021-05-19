@@ -1,7 +1,5 @@
 package simulator.view;
 
-
-
 public class LawsInfo {
 
     private String _key;

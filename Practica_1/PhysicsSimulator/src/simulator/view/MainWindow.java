@@ -17,6 +17,9 @@ public class MainWindow extends JFrame {
 
     private void initGUI() {
 
+        Image icon = Toolkit.getDefaultToolkit().getImage("resources/icons/einstein.png");
+        this.setIconImage(icon);
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
 

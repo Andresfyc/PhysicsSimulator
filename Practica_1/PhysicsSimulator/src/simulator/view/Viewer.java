@@ -83,17 +83,14 @@ public class Viewer extends JComponent implements SimulatorObserver {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
 
             @Override
@@ -140,11 +137,9 @@ public class Viewer extends JComponent implements SimulatorObserver {
                     int y2 = (int) (y3 -  b.getVelocity().direction().getY()*20);
                     drawLineWithArrow(gr,x3,y3,x2,y2,4,3,Color.GREEN,Color.GREEN);
 
-
                     int x1 = (int) (x3 +  b.getForce().direction().getX()*20);
                     int y1 = (int) (y3 -  b.getForce().direction().getY()*20);
                     drawLineWithArrow(gr,x3,y3,x1,y1,4,3,Color.RED,Color.RED);
-
 
                     gr.setColor(Color.black);
                     gr.drawString(b.getId(),_centerX+(int)(x/ _scale),(_centerY-(int)(y/_scale))-5);

@@ -1,5 +1,6 @@
 package simulator.view;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ public class ForceLawsDialog extends JDialog {
 
     private JComboBox<String> comboBox;
     public int _status;
-    private List<JSONObject> _forceLawsInfo;
+    private List<JSONObject> _forceLawsInfo; // solo JSON
     public int _selectedLawsIndex;
     private LawsTableModel fTable;
     private JSONObject data;
@@ -37,7 +38,6 @@ public class ForceLawsDialog extends JDialog {
         JPanel southPanel = new JPanel();
         JPanel panelBotones = new JPanel(new FlowLayout());
 
-
         JLabel help = new JLabel(
                 "<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
         this.add(help, BorderLayout.NORTH);
@@ -54,7 +54,6 @@ public class ForceLawsDialog extends JDialog {
         /************************** ComboBox ******************************/
 
         this.comboBox = new JComboBox<String>();
-
         for (JSONObject s : _forceLawsInfo) {
             this.comboBox.addItem(s.getString("desc"));
         }
@@ -99,18 +98,14 @@ public class ForceLawsDialog extends JDialog {
                     _status = 1;
                     ForceLawsDialog.this.setVisible(false);
                 }
-
             }
-
         });
-
 
         panelBotones.add(ok);
 
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
-
-        setMinimumSize(new Dimension(600, 500));
+        setMinimumSize(new Dimension(600, 300));
         this.setLocationRelativeTo(null);
         this.add(mainPanel);
 
@@ -128,12 +123,46 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
-        String key = (String) fTable.getValueAt(_selectedLawsIndex,0);
-        String value = (String) fTable.getValueAt(_selectedLawsIndex,1);
-        String datos = "{" + key + ":" + value + "}";
-        data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
-        data.put("data", new JSONObject(datos));
-        return data;
+
+        JSONObject jo = new JSONObject();
+        StringBuilder s = new StringBuilder();
+
+        String key ="";
+        String value= "";
+
+        if (_selectedLawsIndex==2){
+            jo.put("type", _forceLawsInfo.get(2).getString("type"));
+            jo.put("data", new JSONObject());
+        }
+        else{
+            s.append('{');
+            jo.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
+            for (int i = 0; i <= _selectedLawsIndex; i++) {
+                key = (String) fTable.getValueAt(i,0);
+                value = (String) fTable.getValueAt(i,1);
+                s.append('"');
+                s.append(key);
+                s.append('"');
+                s.append(':');
+                s.append(value);
+                s.append(',');
+                System.out.println(key);
+                System.out.println(value);
+            }
+            if (s.length() > 1)
+                s.deleteCharAt(s.length() - 1);
+            s.append('}');
+            jo.put("data", new JSONObject(s.toString()));
+        }
+
+        System.out.println(jo.toString());
+        return jo;
     }
+
+
+
 }
+
+
+
 

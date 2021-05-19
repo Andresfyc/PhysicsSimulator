@@ -18,7 +18,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     _numOfBodies = new JLabel("Bodies: "+0);
     _currLaws = new JLabel("Laws: "+ " ");
      initGUI();
-        ctrl.addObserver(this);
+     ctrl.addObserver(this);
     }
 
     private void initGUI() {
@@ -28,7 +28,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
         this.add(Box.createHorizontalStrut(40));
         this.add(_numOfBodies);
         this.add(Box.createHorizontalStrut(40));
-         this.add(_currLaws);
+        this.add(_currLaws);
 // TODO complete the code to build the tool bar
     }
 

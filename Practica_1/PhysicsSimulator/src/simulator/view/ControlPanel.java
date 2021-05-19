@@ -227,18 +227,14 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         int status = fcl.open();
         if (status == 1){
             try {
-
-                JSONObject  law = fcl.getData();
-                System.out.println(law.toString());
+                JSONObject law = fcl.getData();
                 _ctrl.setForceLaws(law);
-
             }
             catch (Exception e){
                 JOptionPane.showMessageDialog(this.getParent(),"Algo ha salido mal: " + e.getLocalizedMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-
 
     // métodos SimulatorObserver
 

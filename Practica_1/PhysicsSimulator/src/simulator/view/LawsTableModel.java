@@ -72,12 +72,6 @@ public class LawsTableModel extends AbstractTableModel {
         return s;
     }
 
-//    public void addElement(String key, String description){
-//       _forceLaws.add(new LawsInfo(key,"",description));
-//        this.fireTableStructureChanged();
-//    }
-
-
     public String toString() {
         String s = "";
         for (int i=0; i < _forceLaws.size(); i++){
