@@ -1,5 +1,6 @@
 package simulator.view;
 
+
 import org.json.JSONObject;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 public class LawsTableModel extends AbstractTableModel {
 
     private List<LawsInfo> _forceLaws;
+    private JSONObject _data;
     static private final String[] columnNames={"Key","Value","Description"};
 
     LawsTableModel() {
@@ -16,7 +18,7 @@ public class LawsTableModel extends AbstractTableModel {
 
     public void updateTable(JSONObject data){
         _forceLaws.clear();
-
+        _data=data;
         for (String key: data.keySet()) {
             LawsInfo li = new LawsInfo(key, "", data.getString(key));
             _forceLaws.add(li);
@@ -57,6 +59,7 @@ public class LawsTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         LawsInfo li =_forceLaws.get(rowIndex);
         String s="";
+        String v="";
 
         switch (columnIndex){
             case 0:
@@ -64,12 +67,15 @@ public class LawsTableModel extends AbstractTableModel {
                 break;
             case 1:
                 s = li.get_value();
+                v = s;
                 break;
             case 2:
                 s = li.get_description();
                 break;
         }
+
         return s;
+
     }
 
     public String toString() {
@@ -79,8 +85,6 @@ public class LawsTableModel extends AbstractTableModel {
         }
         return s;
     }
-
-
 
 
 }

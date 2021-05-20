@@ -1,8 +1,7 @@
 package simulator.view;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
+import org.json.JSONObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -60,7 +59,7 @@ public class ForceLawsDialog extends JDialog {
 
 //        _selectedLawsIndex = 0;
 //        comboBox.setSelectedIndex(_selectedLawsIndex);
-//        JSONObject data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+//        data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
 //        fTable.updateTable(data);
 
         comboBox.addActionListener(new ActionListener() {
@@ -68,6 +67,7 @@ public class ForceLawsDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 _selectedLawsIndex = comboBox.getSelectedIndex();
                 data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+                System.out.println(data.toString() + " comboBox");
                 fTable.updateTable(data);
             }
         });
@@ -124,41 +124,15 @@ public class ForceLawsDialog extends JDialog {
 
     public JSONObject getData() {
 
-        JSONObject jo = new JSONObject();
-        StringBuilder s = new StringBuilder();
 
-        String key ="";
-        String value= "";
+        String key = (String) fTable.getValueAt(_selectedLawsIndex,0);
+        String value = (String) fTable.getValueAt(_selectedLawsIndex,1);
+        String datos = "{" + key + ":" + value + "}";
+        data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
+        data.put("data", new JSONObject(datos));
 
-        if (_selectedLawsIndex==2){
-            jo.put("type", _forceLawsInfo.get(2).getString("type"));
-            jo.put("data", new JSONObject());
-        }
-        else{
-            s.append('{');
-            jo.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
-            for (int i = 0; i <= _selectedLawsIndex; i++) {
-                key = (String) fTable.getValueAt(i,0);
-                value = (String) fTable.getValueAt(i,1);
-                s.append('"');
-                s.append(key);
-                s.append('"');
-                s.append(':');
-                s.append(value);
-                s.append(',');
-                System.out.println(key);
-                System.out.println(value);
-            }
-            if (s.length() > 1)
-                s.deleteCharAt(s.length() - 1);
-            s.append('}');
-            jo.put("data", new JSONObject(s.toString()));
-        }
-
-        System.out.println(jo.toString());
-        return jo;
+        return data;
     }
-
 
 
 }
