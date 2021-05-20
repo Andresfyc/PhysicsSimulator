@@ -9,7 +9,6 @@ import java.util.List;
 public class LawsTableModel extends AbstractTableModel {
 
     private List<LawsInfo> _forceLaws;
-    private JSONObject _data;
     static private final String[] columnNames={"Key","Value","Description"};
 
     LawsTableModel() {
@@ -18,7 +17,6 @@ public class LawsTableModel extends AbstractTableModel {
 
     public void updateTable(JSONObject data){
         _forceLaws.clear();
-        _data=data;
         for (String key: data.keySet()) {
             LawsInfo li = new LawsInfo(key, "", data.getString(key));
             _forceLaws.add(li);
@@ -26,9 +24,9 @@ public class LawsTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
-    public void clear(){
-        _forceLaws.clear();
-    }
+//    public void clear(){
+//       _forceLaws.clear();
+//    }
 
     @Override
     public int getRowCount() {

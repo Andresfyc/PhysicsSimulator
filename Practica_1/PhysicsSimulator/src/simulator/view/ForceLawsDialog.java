@@ -122,22 +122,29 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
-        String datos="";
-        JSONObject js = new JSONObject();
 
+
+        String datos="{";
         for (int i = 0; i < data.length(); i++) {
             String key = (String) fTable.getValueAt(i, 0);
             String value = (String) fTable.getValueAt(i, 1);
-            datos += "{" + key + ":" + value + "}";
-
-            if(data.length()==i-1){
-                datos += ",";
+            if (!value.isEmpty()){
+                datos +=  key + ":" + value;
+                if(i+1 < data.length()){
+                    datos += ",";
+                }
             }
 
-       }
-        js.put("data", datos);
-        data.put("data", js);
+
+        }
+        datos += "}";
+
+        System.out.println(datos);
+        data.put("data", new JSONObject(datos));
         data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
+
+
+
 
         System.out.println(data.toString());
         return data;
