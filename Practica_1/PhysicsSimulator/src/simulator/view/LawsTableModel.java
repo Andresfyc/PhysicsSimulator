@@ -16,7 +16,7 @@ public class LawsTableModel extends AbstractTableModel {
     }
 
     public void updateTable(JSONObject data){
-        _forceLaws.clear();
+        clear();
         for (String key: data.keySet()) {
             LawsInfo li = new LawsInfo(key, "", data.getString(key));
             _forceLaws.add(li);
@@ -24,9 +24,10 @@ public class LawsTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
-//    public void clear(){
-//       _forceLaws.clear();
-//    }
+    public void clear(){
+       _forceLaws.clear();
+       this.fireTableStructureChanged();
+    }
 
     @Override
     public int getRowCount() {
@@ -57,7 +58,6 @@ public class LawsTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         LawsInfo li =_forceLaws.get(rowIndex);
         String s="";
-
 
         switch (columnIndex){
             case 0:
