@@ -59,7 +59,7 @@ public class LawsTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         LawsInfo li =_forceLaws.get(rowIndex);
         String s="";
-        String v="";
+
 
         switch (columnIndex){
             case 0:
@@ -67,7 +67,6 @@ public class LawsTableModel extends AbstractTableModel {
                 break;
             case 1:
                 s = li.get_value();
-                v = s;
                 break;
             case 2:
                 s = li.get_description();

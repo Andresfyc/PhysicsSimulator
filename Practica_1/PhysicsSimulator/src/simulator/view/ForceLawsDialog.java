@@ -67,7 +67,6 @@ public class ForceLawsDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 _selectedLawsIndex = comboBox.getSelectedIndex();
                 data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
-                System.out.println(data.toString() + " comboBox");
                 fTable.updateTable(data);
             }
         });
@@ -123,18 +122,27 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
+        String datos="";
+        JSONObject js = new JSONObject();
 
+        for (int i = 0; i < data.length(); i++) {
+            String key = (String) fTable.getValueAt(i, 0);
+            String value = (String) fTable.getValueAt(i, 1);
+            datos += "{" + key + ":" + value + "}";
 
-        String key = (String) fTable.getValueAt(_selectedLawsIndex,0);
-        String value = (String) fTable.getValueAt(_selectedLawsIndex,1);
-        String datos = "{" + key + ":" + value + "}";
+            if(data.length()==i-1){
+                datos += ",";
+            }
+
+       }
+        js.put("data", datos);
+        data.put("data", js);
         data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
-        data.put("data", new JSONObject(datos));
 
+        System.out.println(data.toString());
         return data;
+
     }
-
-
 }
 
 
