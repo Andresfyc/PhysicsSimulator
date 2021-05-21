@@ -53,14 +53,16 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-        _numOfBodies.setText("Bodies: "+ bodies.size());
-       _currTime.setText("Time: " +time);
+        _numOfBodies.setText("Bodies: " + bodies.size());
+        _currTime.setText("Time: " + time);
+        _currLaws.setText("Laws:  "+ fLawsDesc);
     }
 
     @Override
     public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
         _numOfBodies.setText(String.valueOf(0));
         _numOfBodies.setText("Time: " + time);
+        _currLaws.setText("Laws:  "+ fLawsDesc);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 
     @Override
     public void onForceLawsChanged(String fLawsDesc) {
-        _currLaws.setText("Laws "+ fLawsDesc);
+        _currLaws.setText("Laws: "+ fLawsDesc);
     }
 
 }
