@@ -70,7 +70,6 @@ public class LawsTableModel extends AbstractTableModel {
                 s = li.get_description();
                 break;
         }
-
         return s;
 
     }

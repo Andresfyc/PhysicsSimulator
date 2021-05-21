@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import simulator.control.Controller;
 import simulator.model.Body;
 import simulator.model.SimulatorObserver;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,26 +20,21 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     private boolean _stopped;
     private JSpinner steps;
     private JTextField time;
-    JButton openButton;
-    JButton lawsButton;
-    JButton exitButton;
-    JButton stopButton;
-    JButton runButton;
     ForceLawsDialog fcl;
-    private JFileChooser fc;
+
+    JButton openButton = new JButton();
+    JButton lawsButton = new JButton();
+    JButton exitButton = new JButton();
+    JButton stopButton = new JButton();
+    JButton runButton = new JButton();
+    private JFileChooser fc = null;
+
 
     ControlPanel(Controller ctrl) {
         _ctrl = ctrl;
         _stopped = true;
-        _ctrl.addObserver(this);
-        this.openButton = new JButton();
-        this.lawsButton = new JButton();
-        this.exitButton = new JButton();
-        this.stopButton = new JButton();
-        this.runButton = new JButton();
-        this.fc=null;
-
         initGUI();
+        _ctrl.addObserver(this);
     }
 
     private void initGUI() {
@@ -47,104 +43,26 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false); //impide que se pueda mover de sitio.
 
-        //carga fichero
-
-        openButton.setToolTipText("Load an event file");
-        openButton.setIcon(new ImageIcon(uploadImage("resources/icons/open.png")));
-        openButton.setPreferredSize(new Dimension(36,36));
-        openButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                uploadFiles();
-            }
-        });
+        // carga fichero
+        cargarFichero();
 
         //seleccionar ley de gravedad
+        seleccionarLey();
 
-        lawsButton.setToolTipText("Select the force laws");
-        lawsButton.setIcon(new ImageIcon(uploadImage("resources/icons/physics.png")));
-        lawsButton.setPreferredSize(new Dimension(36,36));
-        lawsButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               selectLaws();
-
-            }
-        });
-
+        // ejecutar
+        ejecutar();
 
         //parar
-        stopButton.setToolTipText("Stop execution");
-        stopButton.setIcon(new ImageIcon(uploadImage("resources/icons/stop.png")));
-        stopButton.setPreferredSize(new Dimension(36,36));
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _stopped=true;
-            }
-        });
+        parar();
 
-
-        //salir
-        exitButton.setToolTipText("Exit");
-        exitButton.setIcon(new ImageIcon(uploadImage("resources/icons/exit.png")));
-        exitButton.setPreferredSize(new Dimension(36,36));
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                quit();
-            }
-        });
-
-
-        //Steps
-        this.steps = new JSpinner(new SpinnerNumberModel(9000,1,10000,100));
-        this.steps.setToolTipText("Steps to execute: 1-10000");
-        this.steps.setMaximumSize(new Dimension(80,40));
-        this.steps.setMinimumSize(new Dimension(80,40));
-        this.steps.setValue(9000);
-
-
+        //Steps - pasos
+        steps();
 
         //time
+        deltaTime();
 
-       this.time = new JTextField("0",5);
-       this.time.setToolTipText("Current time");
-       this.time.setMaximumSize(new Dimension(70,70));
-       this.time.setMinimumSize(new Dimension(70,70));
-       this.time.setEditable(true);
-
-
-
-       // Descativar Botones
-       runButton.setToolTipText("All buttons are disabled except Stop");
-       runButton.setIcon(new ImageIcon(uploadImage("resources/icons/run.png")));
-       runButton.setPreferredSize(new Dimension(36,36));
-       runButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-
-               try{
-                   if(Double.parseDouble(time.getText())>0){
-                       _ctrl.SetDeltaTime(Double.parseDouble(time.getText()));
-                       int n= Integer.parseInt(steps.getValue().toString());
-                       lawsButton.setEnabled(false);
-                       openButton.setEnabled(false);
-                       exitButton.setEnabled(false);
-                       _stopped=false;
-                       run_sim(n);
-                   }else{
-                    dialogError("The value time must be positive");
-                   }
-               }catch (Exception ex){
-
-                   dialogError(ex.getMessage());
-               }
-           }
-       });
-
-
+        //salir
+        salir();
 
 
         toolBar.add(openButton);
@@ -159,11 +77,119 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         toolBar.addSeparator();
         toolBar.add(new JLabel("Delta-Time: "));
         toolBar.add(time);
-        toolBar.addSeparator(new Dimension(300,10));
+        toolBar.addSeparator(new Dimension(300, 10));
         toolBar.add(exitButton);
-       // toolBar.add(Box.createHorizontalStrut(300));
+        // toolBar.add(Box.createHorizontalStrut(300));
         this.add(toolBar);
     }
+
+    /*** carga fichero ***/
+    public void cargarFichero() {
+        openButton.setToolTipText("Load an event file");
+        openButton.setIcon(new ImageIcon(uploadImage("resources/icons/open.png")));
+        openButton.setPreferredSize(new Dimension(36, 36));
+        openButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uploadFiles();
+            }
+        });
+    }
+
+    /*** seleccionar ley de gravedad ***/
+
+    public void seleccionarLey() {
+        lawsButton.setToolTipText("Select the force laws");
+        lawsButton.setIcon(new ImageIcon(uploadImage("resources/icons/physics.png")));
+        lawsButton.setPreferredSize(new Dimension(36, 36));
+        lawsButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectLaws();
+
+            }
+        });
+    }
+
+    /*** ejecutar ***/
+    public void ejecutar() {
+        runButton.setToolTipText("All buttons are disabled except Stop");
+        runButton.setIcon(new ImageIcon(uploadImage("resources/icons/run.png")));
+        runButton.setPreferredSize(new Dimension(36, 36));
+        runButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    if (Double.parseDouble(time.getText()) > 0) {
+                        _ctrl.SetDeltaTime(Double.parseDouble(time.getText()));
+                        int n = Integer.parseInt(steps.getValue().toString());
+                        lawsButton.setEnabled(false);
+                        openButton.setEnabled(false);
+                        exitButton.setEnabled(false);
+                        _stopped = false;
+                        run_sim(n);
+                    } else {
+                        dialogError("The value time must be positive");
+                    }
+                } catch (Exception ex) {
+
+                    dialogError(ex.getMessage());
+                }
+            }
+        });
+
+    }
+
+
+    /*** parar ejecución ***/
+
+    public void parar() {
+        stopButton.setToolTipText("Stop execution");
+        stopButton.setIcon(new ImageIcon(uploadImage("resources/icons/stop.png")));
+        stopButton.setPreferredSize(new Dimension(36, 36));
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _stopped = true;
+            }
+        });
+    }
+
+
+    /*** Steps ***/
+    public void steps() {
+        this.steps = new JSpinner(new SpinnerNumberModel(9000, 1, 10000, 100));
+        this.steps.setToolTipText("Steps to execute: 1-10000");
+        this.steps.setMaximumSize(new Dimension(80, 40));
+        this.steps.setMinimumSize(new Dimension(80, 40));
+        this.steps.setValue(9000);
+    }
+
+    /*** time ***/
+    public void deltaTime() {
+        this.time = new JTextField("0", 5);
+        this.time.setToolTipText("Current time");
+        this.time.setMaximumSize(new Dimension(70, 70));
+        this.time.setMinimumSize(new Dimension(70, 70));
+        this.time.setEditable(true);
+    }
+
+
+    /*** salir ***/
+    public void salir() {
+        exitButton.setToolTipText("Exit");
+        exitButton.setIcon(new ImageIcon(uploadImage("resources/icons/exit.png")));
+        exitButton.setPreferredSize(new Dimension(36, 36));
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quit();
+            }
+        });
+    }
+
 
     // otros métodos privados / protegidos
 
@@ -193,50 +219,50 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             });
         } else {
             _stopped = true;
+            // TODO habilitar todos los botones
             openButton.setEnabled(true);
             lawsButton.setEnabled(true);
             exitButton.setEnabled(true);
-            // TODO habilitar todos los botones
         }
     }
 
     //Logica Botones
-    private void uploadFiles(){
-        this.fc=new JFileChooser();
+    private void uploadFiles() {
+        this.fc = new JFileChooser();
         int deVal = this.fc.showOpenDialog(null);
-        if(deVal == JFileChooser.APPROVE_OPTION){
+        if (deVal == JFileChooser.APPROVE_OPTION) {
             this.fc.setCurrentDirectory(new File("."));
-            File file= this.fc.getSelectedFile();
-            try{
-                InputStream is=new FileInputStream(file);
+            File file = this.fc.getSelectedFile();
+            try {
+                InputStream is = new FileInputStream(file);
                 _ctrl.reset();
                 _ctrl.loadBodies(is);
-            }catch (Exception e){
-                dialogError("Error reading the file: "+e.getMessage());
+            } catch (Exception e) {
+                dialogError("Error reading the file: " + e.getMessage());
             }
-        }else{
-            System.out.println("Load cancelled by user");//pendiente
+        } else {
+            dialogError("Load cancelled by user");
+            //JOptionPane.showMessageDialog(null,"Load cancelled by user");
+            //System.out.println("Load cancelled by user");//pendiente
         }
     }
 
-    public void selectLaws(){
-
-        if (fcl == null){
-            fcl = new ForceLawsDialog((Frame)SwingUtilities.getWindowAncestor(this),_ctrl.getForceLawsInfo());
+    public void selectLaws() {
+        if (fcl == null) {
+            fcl = new ForceLawsDialog((Frame) SwingUtilities.getWindowAncestor(this), _ctrl.getForceLawsInfo());
         }
         int status = fcl.open();
-        if (status == 1){
+        if (status == 1) {
             try {
                 JSONObject law = fcl.getData();
                 _ctrl.setForceLaws(law);
-            }
-            catch (Exception e){
-                JOptionPane.showMessageDialog(this.getParent(),"Algo ha salido mal: " + e.getLocalizedMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this.getParent(), "Algo ha salido mal: " + e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    // métodos SimulatorObserver
+    /****** métodos SimulatorObserver  ********/
 
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
@@ -268,15 +294,17 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     }
 
-    public Image uploadImage(String path){
+    public Image uploadImage(String path) {
         return Toolkit.getDefaultToolkit().createImage(path);
     }
-    public void dialogError(String string){
-        JOptionPane.showMessageDialog(null,string);
+
+    public void dialogError(String string) {
+        JOptionPane.showMessageDialog(null, string);
     }
-    public void quit(){
-        int msj= JOptionPane.showOptionDialog(new JFrame(),"Are sure you want to quit?", "Close", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,null, null, null);
-        if(msj==0){
+
+    public void quit() {
+        int msj = JOptionPane.showOptionDialog(new JFrame(), "Are sure you want to quit?", "Close", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (msj == 0) {
             System.exit(0);
         }
     }

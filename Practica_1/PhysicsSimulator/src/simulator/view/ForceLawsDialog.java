@@ -13,7 +13,7 @@ public class ForceLawsDialog extends JDialog {
 
     private JComboBox<String> comboBox;
     public int _status;
-    private List<JSONObject> _forceLawsInfo; // solo JSON
+    private List<JSONObject> _forceLawsInfo;
     public int _selectedLawsIndex;
     private LawsTableModel fTable;
     private JSONObject data;
@@ -37,10 +37,14 @@ public class ForceLawsDialog extends JDialog {
         JPanel southPanel = new JPanel();
         JPanel panelBotones = new JPanel(new FlowLayout());
 
+
+        /************************** Label ******************************/
+
         JLabel help = new JLabel(
                 "<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
         this.add(help, BorderLayout.NORTH);
 
+        /************************** Tabla ******************************/
 
         fTable = new LawsTableModel();
         JTable jtF = new JTable(fTable);
@@ -57,10 +61,6 @@ public class ForceLawsDialog extends JDialog {
             this.comboBox.addItem(s.getString("desc"));
         }
 
-//        _selectedLawsIndex = 0;
-//        comboBox.setSelectedIndex(_selectedLawsIndex);
-//        data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
-//        fTable.updateTable(data);
 
         comboBox.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +75,7 @@ public class ForceLawsDialog extends JDialog {
         southPanel.add(this.comboBox);
         mainPanel.add(southPanel);
 
-        /************************ Botones **************************/
+        /************************ Boton Cancelar **************************/
 
         JButton cancel = new JButton("Cancel");
         cancel.addActionListener(new ActionListener() {
@@ -89,6 +89,8 @@ public class ForceLawsDialog extends JDialog {
 
         panelBotones.add(cancel);
 
+        /************************ Boton OK **************************/
+
         JButton ok = new JButton("OK");
         ok.addActionListener(new ActionListener() {
             @Override
@@ -101,13 +103,11 @@ public class ForceLawsDialog extends JDialog {
         });
 
         panelBotones.add(ok);
-
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
         setMinimumSize(new Dimension(600, 300));
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);// centrar ventana
         this.add(mainPanel);
-
     }
 
     public int open() {
@@ -122,8 +122,6 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
-
-
         String datos="{";
         for (int i = 0; i < data.length(); i++) {
             String key = (String) fTable.getValueAt(i, 0);
@@ -135,16 +133,12 @@ public class ForceLawsDialog extends JDialog {
                 }
             }
 
-
         }
         datos += "}";
 
         System.out.println(datos);
         data.put("data", new JSONObject(datos));
         data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
-
-
-
 
         System.out.println(data.toString());
         return data;

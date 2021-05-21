@@ -26,13 +26,8 @@ public class PhysicsSimulator implements SimulatorObserver{
     //Avance de los cuerpos
     public void advance() throws  IllegalArgumentException{
 
-        //Se resetean todos los cuerpos
-       /* for(Body b:listBody){
-            b.resetForce();
-        }*/
-
         //Aplica las leyes de fuerza
-       _forceLaws.apply(listBody);
+        _forceLaws.apply(listBody);
 
         //Mueve cada cuerpo con el tiempo real de cada paso
         for(Body b:listBody){
@@ -50,8 +45,8 @@ public class PhysicsSimulator implements SimulatorObserver{
 
     }
 
+
     public void reset(){
-        //listBody.removeAll(listBody);
         listBody.clear();
         _time=0.0;
         for (SimulatorObserver ob:observer) {
@@ -103,7 +98,6 @@ public class PhysicsSimulator implements SimulatorObserver{
         for (Body b:listBody){
             bodies.put(b.getState());
         }
-
         state.put("bodies", bodies);
 
         return state;

@@ -14,9 +14,6 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     private JLabel _numOfBodies; // for number of bodies
 
     StatusBar(Controller ctrl) {
-    _currTime = new JLabel("Time: "+0);
-    _numOfBodies = new JLabel("Bodies: "+0);
-    _currLaws = new JLabel("Laws: "+ " ");
      initGUI();
      ctrl.addObserver(this);
     }
@@ -24,18 +21,36 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     private void initGUI() {
         this.setLayout( new FlowLayout( FlowLayout.LEFT ));
         this.setBorder( BorderFactory.createBevelBorder( 1 ));
-        this.add(_currTime);
-        this.add(Box.createHorizontalStrut(40));
-        this.add(_numOfBodies);
-        this.add(Box.createHorizontalStrut(40));
-        this.add(_currLaws);
-// TODO complete the code to build the tool bar
+
+        // TODO complete the code to build the tool bar
+        currTime();
+        numBodies();
+        currLaws();
     }
 
 // other private/protected methods
-// ...
+    /*** currTime - Tiempo actual ***/
+    public void currTime(){
+        _currTime = new JLabel("Time: "+0);
+        this.add(_currTime);
+        this.add(Box.createHorizontalStrut(40));
+    }
+
+    /*** currTime - Tiempo actual ***/
+    public void numBodies(){
+        _numOfBodies = new JLabel("Bodies: "+0);
+        this.add(_numOfBodies);
+        this.add(Box.createHorizontalStrut(40));
+    }
+
+    /*** currLaws - Leyes actual ***/
+    public void currLaws(){
+        _currLaws = new JLabel("Laws: "+ " ");
+        this.add(_currLaws);
+    }
+
 // SimulatorObserver methods
-// ...
+
     @Override
     public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
         _numOfBodies.setText("Bodies: "+ bodies.size());
@@ -60,7 +75,6 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 
     @Override
     public void onDeltaTimeChanged(double dt) {
-
     }
 
     @Override

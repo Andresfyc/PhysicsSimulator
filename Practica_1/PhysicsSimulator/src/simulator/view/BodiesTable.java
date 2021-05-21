@@ -14,8 +14,8 @@ public class BodiesTable  extends JPanel {
                 BorderFactory.createLineBorder(Color.black, 2),
                 "Bodies",
                 TitledBorder.LEFT, TitledBorder.TOP));
-// TODO completo
 
+// complete
         BodiesTableModel bTable = new BodiesTableModel(ctrl);
         JTable jt = new JTable(bTable);
         JScrollPane scroll = new JScrollPane(jt,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

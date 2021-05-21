@@ -31,12 +31,15 @@ public class Viewer extends JComponent implements SimulatorObserver {
     }
 
     private void initGUI() {
+
+        // borde con titulo
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.black, 2),
                 "Viewer",
                 TitledBorder.LEFT, TitledBorder.TOP));
-// TODO add border with title
+
+
         _bodies = new ArrayList<>();
         _scale = 1.0;
         _showHelp = true;
@@ -44,7 +47,6 @@ public class Viewer extends JComponent implements SimulatorObserver {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
             }
 
             @Override
@@ -76,7 +78,6 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
             }
         });
 
@@ -121,8 +122,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
         gr.setColor(Color.red);
         gr.setFont(new Font("Dialog", Font.PLAIN, 18));
         gr.drawString("+",_centerX,_centerY);
-// TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
 
+// TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
             for (Body b:_bodies) {
 
                 double x= b.getPosition().getX();
@@ -148,6 +149,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
             }
         }
+
 // TODO dibujar ayuda si _showHelp es verdadero
             if(this._showHelp){
                 gr.setColor(Color.red);
@@ -196,6 +198,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
         g.setColor(arrowColor);
         g.fillPolygon(xpoints, ypoints, 3);
     }
+
     private void update (List<Body> bodies){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -206,6 +209,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
             }
         });
     }
+
 // SimulatorObserver methods
 
     @Override
@@ -230,11 +234,9 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
     @Override
     public void onDeltaTimeChanged(double dt) {
-
     }
 
     @Override
     public void onForceLawsChanged(String fLawsDesc) {
-
     }
 }

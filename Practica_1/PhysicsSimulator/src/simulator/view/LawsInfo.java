@@ -28,6 +28,4 @@ public class LawsInfo {
         return _description;
     }
 
-
-
 }
