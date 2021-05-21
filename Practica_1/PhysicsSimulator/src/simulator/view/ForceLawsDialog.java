@@ -23,6 +23,7 @@ public class ForceLawsDialog extends JDialog {
         this.setTitle("Force Laws Selection");
         _status = 0;
         _forceLawsInfo = forceLawsInfo;
+        _selectedLawsIndex=0;
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         initGUI();
     }
@@ -122,6 +123,7 @@ public class ForceLawsDialog extends JDialog {
     }
 
     public JSONObject getData() {
+        JSONObject laws =  new JSONObject();
         String datos="{";
         for (int i = 0; i < data.length(); i++) {
             String key = (String) fTable.getValueAt(i, 0);
@@ -137,11 +139,11 @@ public class ForceLawsDialog extends JDialog {
         datos += "}";
 
         System.out.println(datos);
-        data.put("data", new JSONObject(datos));
-        data.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
+        laws.put("data", new JSONObject(datos));
+        laws.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
 
         System.out.println(data.toString());
-        return data;
+        return laws;
 
     }
 }

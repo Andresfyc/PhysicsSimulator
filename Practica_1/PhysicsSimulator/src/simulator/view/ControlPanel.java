@@ -43,26 +43,13 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false); //impide que se pueda mover de sitio.
 
-        // carga fichero
-        cargarFichero();
-
-        //seleccionar ley de gravedad
-        seleccionarLey();
-
-        // ejecutar
-        ejecutar();
-
-        //parar
-        parar();
-
-        //Steps - pasos
-        steps();
-
-        //time
-        deltaTime();
-
-        //salir
-        salir();
+        cargarFichero(); // carga fichero
+        seleccionarLey();//seleccionar ley de gravedad
+        ejecutar();      // ejecutar
+        parar();         //parar
+        steps();         //Steps - pasos
+        deltaTime();     //time
+        salir();         //salir
 
 
         toolBar.add(openButton);
@@ -247,6 +234,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         }
     }
 
+    // Selecciona una ley
     public void selectLaws() {
         if (fcl == null) {
             fcl = new ForceLawsDialog((Frame) SwingUtilities.getWindowAncestor(this), _ctrl.getForceLawsInfo());
