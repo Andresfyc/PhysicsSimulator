@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import simulator.control.Controller;
 import simulator.model.Body;
 import simulator.model.SimulatorObserver;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -131,7 +130,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
 
     /*** parar ejecución ***/
-
     public void parar() {
         stopButton.setToolTipText("Stop execution");
         stopButton.setIcon(new ImageIcon(uploadImage("resources/icons/stop.png")));

@@ -1,9 +1,12 @@
 package simulator.model;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.w3c.dom.ls.LSOutput;
 import simulator.model.SimulatorObserver;
 public class PhysicsSimulator implements SimulatorObserver{
 
@@ -26,6 +29,11 @@ public class PhysicsSimulator implements SimulatorObserver{
     //Avance de los cuerpos
     public void advance() throws  IllegalArgumentException{
 
+        //Se resetean todos los cuerpos
+        for(Body b:listBody){
+            b.resetForce();
+        }
+
         //Aplica las leyes de fuerza
         _forceLaws.apply(listBody);
 
@@ -42,7 +50,6 @@ public class PhysicsSimulator implements SimulatorObserver{
             ob.onAdvance(listBody,_time);
         }
 
-
     }
 
 
@@ -50,6 +57,7 @@ public class PhysicsSimulator implements SimulatorObserver{
         listBody.clear();
         _time=0.0;
         for (SimulatorObserver ob:observer) {
+            // envia una notificacion a todos los observadores.
             ob.onReset(listBody,_time,_dt,_forceLaws.toString());
         }
     }
@@ -63,6 +71,7 @@ public class PhysicsSimulator implements SimulatorObserver{
         }
     }
 
+    // cambia las leyes de fuerza del simulador a forceLaws
     public void setForceLawsLaws(ForceLaws forceLaws)throws IllegalArgumentException {
         this._forceLaws = forceLaws;
 
@@ -72,10 +81,12 @@ public class PhysicsSimulator implements SimulatorObserver{
         }
     }
 
+
     //  añade o a la lista de observadores, si es que no está ya en ella.
     public void addObserver(SimulatorObserver o){
         if (!observer.contains(o)) {
             observer.add(o);
+            // envia una notificación solo al que se acaba de registrar
             o.onRegister(listBody, _time,_dt,_forceLaws.toString());
         }
     }
@@ -85,6 +96,7 @@ public class PhysicsSimulator implements SimulatorObserver{
         if (listBody.contains(b)) throw new IllegalArgumentException("Este cuerpo ya existe");
         listBody.add(b);
         for (SimulatorObserver ob:observer) {
+            // envia una notificacion a todos los observadores
             ob.onBodyAdded(listBody,b);
         }
     }

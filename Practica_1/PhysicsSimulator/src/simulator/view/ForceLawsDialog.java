@@ -62,6 +62,9 @@ public class ForceLawsDialog extends JDialog {
             this.comboBox.addItem(s.getString("desc"));
         }
 
+//        comboBox.setSelectedIndex(_selectedLawsIndex);
+//        data = _forceLawsInfo.get(_selectedLawsIndex).getJSONObject("data");
+//        fTable.updateTable(data);
 
         comboBox.addActionListener(new ActionListener() {
             @Override

@@ -5,6 +5,7 @@ import simulator.control.Controller;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MainWindow extends JFrame {
 
     Controller _ctrl;
@@ -25,10 +26,12 @@ public class MainWindow extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
 
+
         // Panel en general
         JPanel contentPanel=new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel,BoxLayout.Y_AXIS));
         mainPanel.add(contentPanel,BorderLayout.CENTER);
+
 
         // barra de control
         ControlPanel ctrlPanel= new ControlPanel(_ctrl);
