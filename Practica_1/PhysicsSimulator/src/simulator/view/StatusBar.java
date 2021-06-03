@@ -13,6 +13,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     private JLabel _currLaws; // for gravity laws
     private JLabel _numOfBodies; // for number of bodies
 
+
     StatusBar(Controller ctrl) {
      initGUI();
      ctrl.addObserver(this);
@@ -32,13 +33,17 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     /*** currTime - Tiempo actual ***/
     public void currTime(){
         _currTime = new JLabel("Time: "+0);
+        _currTime.setSize(150, 10);
+        _currTime.add(new JSeparator());
         this.add(_currTime);
-        this.add(Box.createHorizontalStrut(40));
+        this.add(Box.createHorizontalStrut(55));
     }
 
     /*** currTime - Tiempo actual ***/
     public void numBodies(){
         _numOfBodies = new JLabel("Bodies: "+0);
+        _numOfBodies.setSize(50, 10);
+        _numOfBodies.add(new JSeparator());
         this.add(_numOfBodies);
         this.add(Box.createHorizontalStrut(40));
     }
@@ -46,6 +51,8 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     /*** currLaws - Leyes actual ***/
     public void currLaws(){
         _currLaws = new JLabel("Laws: "+ " ");
+        _currLaws.setSize(50, 10);
+        _currLaws.add(new JSeparator());
         this.add(_currLaws);
     }
 
@@ -56,6 +63,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
         _numOfBodies.setText("Bodies: " + bodies.size());
         _currTime.setText("Time: " + time);
         _currLaws.setText("Laws:  "+ fLawsDesc);
+
     }
 
     @Override

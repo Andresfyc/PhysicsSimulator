@@ -32,14 +32,18 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
     ControlPanel(Controller ctrl) {
         _ctrl = ctrl;
         _stopped = true;
+        this.fc = new JFileChooser();
         initGUI();
         _ctrl.addObserver(this);
+
     }
 
     private void initGUI() {
 // TODO construya la barra de herramientas agregando botones, etc.
 
         JToolBar toolBar = new JToolBar();
+
+        setLayout(new BorderLayout());
         toolBar.setFloatable(false); //impide que se pueda mover de sitio.
 
         cargarFichero(); // carga fichero
@@ -63,17 +67,20 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         toolBar.addSeparator();
         toolBar.add(new JLabel("Delta-Time: "));
         toolBar.add(time);
-        toolBar.addSeparator(new Dimension(300, 10));
+        toolBar.add(Box.createHorizontalGlue()); // Pegarlo en la derecha
         toolBar.add(exitButton);
-        // toolBar.add(Box.createHorizontalStrut(300));
+
         this.add(toolBar);
+
     }
+
 
     /*** carga fichero ***/
     public void cargarFichero() {
         openButton.setToolTipText("Load an event file");
         openButton.setIcon(new ImageIcon(uploadImage("resources/icons/open.png")));
         openButton.setPreferredSize(new Dimension(36, 36));
+        //openButton.setAlignmentX(LEFT_ALIGNMENT);
         openButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -213,7 +220,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
     //Logica Botones
     private void uploadFiles() {
-        this.fc = new JFileChooser();
+
         int deVal = this.fc.showOpenDialog(null);
         if (deVal == JFileChooser.APPROVE_OPTION) {
             this.fc.setCurrentDirectory(new File("."));
