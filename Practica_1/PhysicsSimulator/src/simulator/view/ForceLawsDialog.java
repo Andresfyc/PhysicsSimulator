@@ -141,7 +141,7 @@ public class ForceLawsDialog extends JDialog {
         }
         datos += "}";
 
-        System.out.println(datos);
+        //System.out.println(datos);
         laws.put("data", new JSONObject(datos));
         laws.put("type", _forceLawsInfo.get(_selectedLawsIndex).getString("type"));
 

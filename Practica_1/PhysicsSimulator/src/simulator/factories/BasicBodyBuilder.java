@@ -5,13 +5,13 @@ import org.json.JSONObject;
 import simulator.misc.Vector2D;
 import simulator.model.Body;
 
+//para crear objetos de la clase Body
 public class BasicBodyBuilder extends Builder<Body>{
 
     public BasicBodyBuilder() {
         _typeTag="basic";
         _desc="Default Body";
     }
-//para crear objetos de la clase Body
 
     @Override
     protected Body createTheInstance(JSONObject data) throws IllegalArgumentException{
@@ -32,7 +32,6 @@ public class BasicBodyBuilder extends Builder<Body>{
         data.put("v","velocity");
         data.put("p","body position");
         data.put("m","mass");
-
 
         return data;
     }

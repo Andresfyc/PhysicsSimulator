@@ -33,26 +33,29 @@ public class StatusBar extends JPanel implements SimulatorObserver {
     /*** currTime - Tiempo actual ***/
     public void currTime(){
         _currTime = new JLabel("Time: "+0);
-        _currTime.setSize(150, 10);
-        _currTime.add(new JSeparator());
+        _currTime.setMinimumSize(new Dimension(100,10));
+        _currTime.setMaximumSize(new Dimension(100,10));
+        _currTime.setPreferredSize(new Dimension(100,10));
         this.add(_currTime);
-        this.add(Box.createHorizontalStrut(55));
+        //this.add(Box.createHorizontalStrut(55));
     }
 
     /*** currTime - Tiempo actual ***/
     public void numBodies(){
         _numOfBodies = new JLabel("Bodies: "+0);
-        _numOfBodies.setSize(50, 10);
-        _numOfBodies.add(new JSeparator());
+        _numOfBodies.setMinimumSize(new Dimension(100,10));
+        _numOfBodies.setMaximumSize(new Dimension(100,10));
+        _numOfBodies.setPreferredSize(new Dimension(100,10));
         this.add(_numOfBodies);
-        this.add(Box.createHorizontalStrut(40));
+        //this.add(Box.createHorizontalStrut(40));
     }
 
     /*** currLaws - Leyes actual ***/
     public void currLaws(){
         _currLaws = new JLabel("Laws: "+ " ");
-        _currLaws.setSize(50, 10);
-        _currLaws.add(new JSeparator());
+        _currLaws.setMinimumSize(new Dimension(300,10));
+        _currLaws.setMaximumSize(new Dimension(300,10));
+        _currLaws.setPreferredSize(new Dimension(300,10));
         this.add(_currLaws);
     }
 

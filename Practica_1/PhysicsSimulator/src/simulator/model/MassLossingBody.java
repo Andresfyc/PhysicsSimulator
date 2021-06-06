@@ -5,8 +5,14 @@ import simulator.misc.Vector2D;
 
 public class MassLossingBody extends Body{
 
+    //un número entre 0 y 1 que representa el factor de pérdida de masa.
     protected double lossFactor;
+
+    //un número positivo que indica el intervalo de tiempo (en
+    //segundos) después del cual el objeto pierde masa
     protected double lossFrequency;
+
+    //tiempo acumulado
     protected double accumulatedTime;
 
     public MassLossingBody(String id, Vector2D velocity, Vector2D position, double mass, double lossFactor, double lossFrequency) {
@@ -21,7 +27,9 @@ public class MassLossingBody extends Body{
         super.move(t);
         accumulatedTime += t;
         if (accumulatedTime >= lossFrequency ){
+            // la nueva masa será m ∗ (1 − lossFactor)
             mass=mass*(1-lossFactor);
+            // tiempo acumulado en 0.
             accumulatedTime  = 0.0;
         }
     }
