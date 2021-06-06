@@ -120,6 +120,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 // TODO dibuja una cruz en el centro
         gr.setColor(Color.red);
         gr.setFont(new Font("Dialog", Font.PLAIN, 18));
+        // Para que dibuje un String drawString
         gr.drawString("+",_centerX,_centerY);
 
 // TODO dibujar cuerpos (con vectores si _showVectors es verdadero)
@@ -133,16 +134,22 @@ public class Viewer extends JComponent implements SimulatorObserver {
                     int x3=  (_centerX + (int) (x/_scale))+5;
                     int y3 =  (_centerY - (int) (y/_scale))+5;
 
+                    // flechas de la direccion velocidad
                     int x2 = (int) (x3 +  b.getVelocity().direction().getX()*30);
                     int y2 = (int) (y3 -  b.getVelocity().direction().getY()*30);
                     drawLineWithArrow(gr,x3,y3,x2,y2,4,3,Color.GREEN,Color.GREEN);
 
+
+                    // flechas de la direccion de la fuerza
                     int x1 = (int) (x3 +  b.getForce().direction().getX()*40);
                     int y1 = (int) (y3 -  b.getForce().direction().getY()*40);
                     drawLineWithArrow(gr,x3,y3,x1,y1,4,3,Color.RED,Color.RED);
 
+                    // ID de los cuerpos
                     gr.setColor(Color.black);
                     gr.drawString(b.getId(),_centerX+(int)(x/ _scale),(_centerY-(int)(y/_scale))-20);
+
+                    // Los cuerpos (fillOval para que sea un circulo)
                     gr.setColor(Color.BLUE);
                     gr.fillOval(_centerX+(int)(x/_scale),_centerY-(int)(y/_scale),10,10);
 
