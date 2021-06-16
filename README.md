@@ -1,3 +1,3 @@
-# TP_2
+# PhysicsSimulator - UCM
 - Alexandra Molina
 - Andres Yunda
